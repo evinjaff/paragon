@@ -22,7 +22,7 @@ class GameScriptScanner:
             "Srp": self._scan_dramatic_music_command,
             "Slp": self._scan_player_music_with_volume_ramp_command,
             "Sls": self._scan_cancel_music_ramp_command,
-            "Slv": self._scan_set_ramp_volume_command
+            "Slv": self._scan_set_ramp_volume_command,
         }
         self._two_char_commands = {
             "Wm": self._scan_load_portraits_command,
@@ -38,7 +38,7 @@ class GameScriptScanner:
             "Fo": self._scan_fade_out_command,
             "Fw": self._scan_fade_white_command,
             "Tc": self._scan_visual_effect_command,
-            "k\n": self._scan_pause_newline_command
+            "k\n": self._scan_pause_newline_command,
         }
         self._one_char_commands = {
             "a": self._scan_player_mentioned_command,
@@ -50,7 +50,7 @@ class GameScriptScanner:
             "p": self._scan_clear_message_command,
             "b": self._scan_cutscene_action_command,
             "w": self._scan_wait_command,
-            "l": self._scan_player_marriage_scene_command
+            "l": self._scan_player_marriage_scene_command,
         }
 
     def reset(self):
@@ -93,13 +93,18 @@ class GameScriptScanner:
             return False
         if not scanned_commands:
             return False
-        if isinstance(scanned_commands[0], (PrintAvatarNameCommand, ArgumentCommand, GenderDependentMessageCommand)):
+        if isinstance(
+            scanned_commands[0],
+            (PrintAvatarNameCommand, ArgumentCommand, GenderDependentMessageCommand),
+        ):
             return False
         return not isinstance(scanned_commands[0], PlayMessageCommand)
 
     def _scan_command(self) -> List[Command]:
         self._next()  # Consume the dollar sign.
-        three_char_command = self._peek() + self._safe_lookahead(1) + self._safe_lookahead(2)
+        three_char_command = (
+            self._peek() + self._safe_lookahead(1) + self._safe_lookahead(2)
+        )
         two_char_command = self._peek() + self._safe_lookahead(1)
         one_char_command = self._peek()
         if three_char_command in self._three_char_commands:
@@ -112,7 +117,10 @@ class GameScriptScanner:
             self._position += 1
             return self._one_char_commands[one_char_command]()
         else:
-            raise TranspilerError(self._source_position(), "Unrecognized command " + self._input[self._position:])
+            raise TranspilerError(
+                self._source_position(),
+                "Unrecognized command " + self._input[self._position :],
+            )
 
     def _scan_int(self) -> int:
         result = ""
@@ -138,7 +146,10 @@ class GameScriptScanner:
     def _expect(self, expected_char: str):
         next_char = self._next()
         if next_char != expected_char:
-            raise TranspilerError(self._source_position(), "Expected %s found %s" % (expected_char, next_char))
+            raise TranspilerError(
+                self._source_position(),
+                "Expected %s found %s" % (expected_char, next_char),
+            )
 
     def _peek(self) -> str:
         if self._position >= len(self._input):

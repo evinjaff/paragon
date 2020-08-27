@@ -27,7 +27,9 @@ class U16Property(PlainValueProperty):
         editor_type = json["type"]
         if editor_type == "spinbox":
             hex = json.get("hex", False)
-            prop.editor_factory = lambda: IntegerPropertySpinBox(prop.name, 0, 65535, hex)
+            prop.editor_factory = lambda: IntegerPropertySpinBox(
+                prop.name, 0, 65535, hex
+            )
         elif editor_type == "combobox":
             data_type = json["data"]
             prop.editor_factory = lambda: DataComboBox(prop.name, data_type, int)

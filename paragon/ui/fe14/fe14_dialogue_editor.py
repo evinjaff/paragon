@@ -1,7 +1,15 @@
 from PySide2 import QtCore
 from PySide2.QtWidgets import QSizePolicy
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QWidget, QListView, QHBoxLayout, QFormLayout, QLabel, QLineEdit, QScrollArea
+from PySide2.QtWidgets import (
+    QWidget,
+    QListView,
+    QHBoxLayout,
+    QFormLayout,
+    QLabel,
+    QLineEdit,
+    QScrollArea,
+)
 from paragon.services.service_locator import locator
 
 
@@ -33,8 +41,12 @@ class FE14DialogueEditor(QWidget):
         layout = QHBoxLayout(self)
         characters_list = QListView()
         characters_list.setModel(characters_model)
-        characters_list.setSizePolicy(QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding))
-        characters_list.selectionModel().currentRowChanged.connect(self._update_selection)
+        characters_list.setSizePolicy(
+            QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        )
+        characters_list.selectionModel().currentRowChanged.connect(
+            self._update_selection
+        )
         self.list = characters_list
 
         scroll_area = QScrollArea()
@@ -44,7 +56,9 @@ class FE14DialogueEditor(QWidget):
         for dialogue in self.service.dialogues:
             label = QLabel(dialogue.name)
             editor = QLineEdit()
-            editor.editingFinished.connect(lambda e=editor, d=dialogue: self._on_editor_change(e, d))
+            editor.editingFinished.connect(
+                lambda e=editor, d=dialogue: self._on_editor_change(e, d)
+            )
             self.editors.append(editor)
             form.addRow(label, editor)
         form_container.setLayout(form)
@@ -61,7 +75,9 @@ class FE14DialogueEditor(QWidget):
     def _on_editor_change(self, editor, dialogue):
         character = self.model.data(self.list.currentIndex(), QtCore.Qt.UserRole)
         if character:
-            self.service.update_dialogue_value_for_character(character, dialogue, editor.text())
+            self.service.update_dialogue_value_for_character(
+                character, dialogue, editor.text()
+            )
 
     def _update_selection(self, index: QtCore.QModelIndex):
         # Sanity check
@@ -73,4 +89,6 @@ class FE14DialogueEditor(QWidget):
         for i in range(0, len(self.editors)):
             editor = self.editors[i]
             dialogue = self.service.dialogues[i]
-            editor.setText(self.service.get_dialogue_value_for_character(character, dialogue))
+            editor.setText(
+                self.service.get_dialogue_value_for_character(character, dialogue)
+            )

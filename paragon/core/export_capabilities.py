@@ -3,7 +3,7 @@ from typing import List
 
 
 class ExportCapability(Enum):
-    Selectable = 0,
+    Selectable = (0,)
     Appendable = 1
 
 

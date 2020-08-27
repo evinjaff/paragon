@@ -27,7 +27,10 @@ class PointerProperty(AbstractProperty):
 
     def get_property_address(self):
         if issubclass(type(self.parent.owner), Module):
-            property_address = self.parent.owner.find_base_address_for_element(self.parent) + self.offset
+            property_address = (
+                self.parent.owner.find_base_address_for_element(self.parent)
+                + self.offset
+            )
             return property_address, self.parent.owner.archive
         else:
             parent_property_address, archive = self.parent.owner.get_property_address()

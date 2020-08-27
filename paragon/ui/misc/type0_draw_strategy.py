@@ -6,5 +6,7 @@ class Type0DrawStrategy:
         self.view = view
         self.scene = view.scene
 
-    def draw_message(self, text: str, window_type="standard", left=True) -> QGraphicsItemGroup:
+    def draw_message(
+        self, text: str, window_type="standard", left=True
+    ) -> QGraphicsItemGroup:
         pass

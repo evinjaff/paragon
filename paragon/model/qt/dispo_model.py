@@ -116,13 +116,17 @@ class DisposModel(QStandardItemModel):
             raise ValueError
         self.dispos.delete_spawn(spawn)
 
-    def get_character_from_spawn(self, spawn: PropertyContainer) -> Optional[PropertyContainer]:
+    def get_character_from_spawn(
+        self, spawn: PropertyContainer
+    ) -> Optional[PropertyContainer]:
         person = self.chapter_data.person
         result = None
         if person:
             result = person.get_element_by_key(spawn.get_key())
         if not result:
-            characters_module = locator.get_scoped("ModuleService").get_module("Characters")
+            characters_module = locator.get_scoped("ModuleService").get_module(
+                "Characters"
+            )
             result = characters_module.get_element_by_key(spawn.get_key())
         return result
 
@@ -134,12 +138,16 @@ class DisposModel(QStandardItemModel):
             if elem:
                 result = person.get_display_name_for_entry(elem)
         if not result:
-            characters_module = locator.get_scoped("ModuleService").get_module("Characters")
+            characters_module = locator.get_scoped("ModuleService").get_module(
+                "Characters"
+            )
             elem = characters_module.get_element_by_key(spawn.get_key())
             result = characters_module.get_display_name_for_entry(elem)
         return result
 
-    def _set_item_name_and_decoration(self, item: QStandardItem, spawn: PropertyContainer):
+    def _set_item_name_and_decoration(
+        self, item: QStandardItem, spawn: PropertyContainer
+    ):
         character = self.get_character_from_spawn(spawn)
         if not character:
             item.setText("[Broken PID]")

@@ -31,8 +31,10 @@ class ProjectModel(QStandardItemModel):
             return row_number
         row = self.takeRow(row_number)
         self.insertRow(row_number - 1, row)
-        self.projects[row_number - 1], self.projects[row_number] = \
-            self.projects[row_number], self.projects[row_number - 1]
+        self.projects[row_number - 1], self.projects[row_number] = (
+            self.projects[row_number],
+            self.projects[row_number - 1],
+        )
         return row_number - 1
 
     def move_project_down(self, index: QModelIndex) -> int:
@@ -41,8 +43,10 @@ class ProjectModel(QStandardItemModel):
             return row_number
         row = self.takeRow(row_number)
         self.insertRow(row_number + 1, row)
-        self.projects[row_number + 1], self.projects[row_number] = \
-            self.projects[row_number], self.projects[row_number + 1]
+        self.projects[row_number + 1], self.projects[row_number] = (
+            self.projects[row_number],
+            self.projects[row_number + 1],
+        )
         return row_number + 1
 
     @staticmethod

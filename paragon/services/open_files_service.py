@@ -11,7 +11,7 @@ class OpenFile:
 
 class OpenFilesService:
     def __init__(self, filesystem):
-        self.open_files: Dict[str: OpenFile] = {}
+        self.open_files: Dict[str:OpenFile] = {}
         self.open_message_archives: Dict[MessageArchive] = {}
         self.filesystem = filesystem
 
@@ -40,9 +40,9 @@ class OpenFilesService:
         source_path = self.filesystem.get_source_path()
         dest_path = self.filesystem.get_dest_path()
         if file_path.startswith(dest_path):
-            return file_path[len(dest_path):]
+            return file_path[len(dest_path) :]
         if file_path.startswith(source_path):
-            return file_path[len(source_path):]
+            return file_path[len(source_path) :]
         if self.exists(file_path):
             return file_path
         return None
@@ -87,7 +87,9 @@ class OpenFilesService:
         if path_in_rom in self.open_files:
             logging.info(path_in_rom + " is already open. Overwriting...")
         else:
-            logging.info(path_in_rom + " was not registered previously. Creating a new entry...")
+            logging.info(
+                path_in_rom + " was not registered previously. Creating a new entry..."
+            )
         self.open_files[path_in_rom] = OpenFile(archive)
         self.open_files[path_in_rom].dirty = True
 
@@ -96,7 +98,9 @@ class OpenFilesService:
         if path_in_rom in self.open_message_archives:
             logging.info(path_in_rom + " is already open. Overwriting...")
         else:
-            logging.info(path_in_rom + " was not registered previously. Creating a new entry...")
+            logging.info(
+                path_in_rom + " was not registered previously. Creating a new entry..."
+            )
         self.open_message_archives[path_in_rom] = archive
         archive.dirty = True
 
@@ -161,7 +165,10 @@ class OpenFilesService:
         return path_in_rom in self.open_files or self.filesystem.exists(path_in_rom)
 
     def localized_exists(self, path_in_rom):
-        return path_in_rom in self.open_message_archives or self.filesystem.localized_exists(path_in_rom)
+        return (
+            path_in_rom in self.open_message_archives
+            or self.filesystem.localized_exists(path_in_rom)
+        )
 
     def localized_path(self, path_in_rom):
         return self.filesystem.get_localized_path(path_in_rom)

@@ -7,7 +7,7 @@ from paragon.module.table_module import TableModule
 
 
 def create_module_from_path(path) -> Module:
-    with open(path, "r", encoding='utf-8') as f:
+    with open(path, "r", encoding="utf-8") as f:
         js = load(f)
         if js["type"] == "table":
             return TableModule(js)

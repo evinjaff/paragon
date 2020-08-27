@@ -38,7 +38,9 @@ class VoiceSetModel(QAbstractListModel):
 
 
 class VoiceSetEntriesModel(QAbstractListModel):
-    def __init__(self, voice_set_label: str, entries: List[PropertyContainer], parent=None):
+    def __init__(
+        self, voice_set_label: str, entries: List[PropertyContainer], parent=None
+    ):
         super().__init__(parent)
         self.voice_set_label = voice_set_label
         self.entries = entries
@@ -67,7 +69,9 @@ class VoiceSetEntriesModel(QAbstractListModel):
         return True
 
     def removeRows(self, row: int, count: int, parent: QModelIndex = ...) -> bool:
-        if row not in range(0, len(self.entries)) or row + count not in range(0, len(self.entries) + 1):
+        if row not in range(0, len(self.entries)) or row + count not in range(
+            0, len(self.entries) + 1
+        ):
             return False
 
         self.beginRemoveRows(parent, row, row + count)

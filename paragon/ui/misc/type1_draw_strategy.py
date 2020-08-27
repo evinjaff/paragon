@@ -18,7 +18,9 @@ class Type1DrawStrategy:
         self.view = view
         self.scene: QGraphicsScene = view.scene
 
-    def draw_message(self, text: str, name: str, window_type="standard", mode=0, left=True) -> QGraphicsItemGroup:
+    def draw_message(
+        self, text: str, name: str, window_type="standard", mode=0, left=True
+    ) -> QGraphicsItemGroup:
         # Create the message box
         talk_window: QPixmap = self.view.talk_windows[window_type][mode]
         message_box = self.scene.addPixmap(talk_window)
@@ -62,7 +64,7 @@ class Type1DrawStrategy:
                 split_text[0],
                 _TALK_WINDOW_MODE_0_X + 20,
                 _TALK_WINDOW_Y + 5,
-                312
+                312,
             )
         if len(split_text) > 1 and split_text[1]:
             text_utils.draw_message_text(
@@ -71,15 +73,17 @@ class Type1DrawStrategy:
                 split_text[1],
                 _TALK_WINDOW_MODE_0_X + 20,
                 _TALK_WINDOW_Y + 21,
-                312
+                312,
             )
 
-        group = self.scene.createItemGroup([
-            message_box,
-            message_box_text,
-            message_box_text_2,
-            name_plate,
-            name_plate_text
-        ])
+        group = self.scene.createItemGroup(
+            [
+                message_box,
+                message_box_text,
+                message_box_text_2,
+                name_plate,
+                name_plate_text,
+            ]
+        )
         group.setZValue(2.0)
         return group

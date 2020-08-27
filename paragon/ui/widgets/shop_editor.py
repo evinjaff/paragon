@@ -3,24 +3,16 @@ from PySide2.QtWidgets import QSpinBox, QLabel, QFormLayout, QGroupBox
 from paragon.services import service_locator
 from paragon.ui.widgets.property_widget import PropertyWidget
 
-EDITOR_LABELS = [
-    "Shop Level 1",
-    "Shop Level 2",
-    "Shop Level 3"
-]
+EDITOR_LABELS = ["Shop Level 1", "Shop Level 2", "Shop Level 3"]
 
 
-class ShopEditor (QGroupBox, PropertyWidget):
+class ShopEditor(QGroupBox, PropertyWidget):
     def __init__(self, target_property_name):
         QGroupBox.__init__(self)
         PropertyWidget.__init__(self, target_property_name)
         layout = QFormLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
-        self.editors = [
-            QSpinBox(),
-            QSpinBox(),
-            QSpinBox()
-        ]
+        self.editors = [QSpinBox(), QSpinBox(), QSpinBox()]
 
         labels = self._get_labels_for_project()
         for i in range(0, 3):
@@ -29,9 +21,15 @@ class ShopEditor (QGroupBox, PropertyWidget):
             layout.addRow(QLabel(labels[i]), editor)
             self.setLayout(layout)
 
-        self.editors[0].valueChanged.connect(lambda: self._on_edit(0, self.editors[0].value()))
-        self.editors[1].valueChanged.connect(lambda: self._on_edit(1, self.editors[1].value()))
-        self.editors[2].valueChanged.connect(lambda: self._on_edit(2, self.editors[2].value()))
+        self.editors[0].valueChanged.connect(
+            lambda: self._on_edit(0, self.editors[0].value())
+        )
+        self.editors[1].valueChanged.connect(
+            lambda: self._on_edit(1, self.editors[1].value())
+        )
+        self.editors[2].valueChanged.connect(
+            lambda: self._on_edit(2, self.editors[2].value())
+        )
 
     @staticmethod
     def _get_labels_for_project():

@@ -1,7 +1,14 @@
 import struct
 
 from PySide2.QtGui import QColor
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QLabel, QSizePolicy, QColorDialog, QPushButton
+from PySide2.QtWidgets import (
+    QWidget,
+    QHBoxLayout,
+    QLabel,
+    QSizePolicy,
+    QColorDialog,
+    QPushButton,
+)
 
 from paragon.ui.widgets.property_widget import PropertyWidget
 
@@ -27,14 +34,18 @@ class RGBAColorEditor(QWidget, PropertyWidget):
 
     def _update_color_label(self, color: QColor):
         color_string = hex(color.rgba())[2:].upper()
-        style_string = "QLabel { border: 2px solid black; background-color: #%s }" % color_string
+        style_string = (
+            "QLabel { border: 2px solid black; background-color: #%s }" % color_string
+        )
         self.color_label.setStyleSheet(style_string)
 
     def _on_select_color_pressed(self):
         if self.target:
             buffer = self.target[self.target_property_name].value
             old_color = QColor(buffer[0], buffer[1], buffer[2], buffer[3])
-            new_color = QColorDialog.getColor(old_color, self, "Select Color", options=QColorDialog.ShowAlphaChannel)
+            new_color = QColorDialog.getColor(
+                old_color, self, "Select Color", options=QColorDialog.ShowAlphaChannel
+            )
             if not new_color.isValid():
                 return
 
@@ -43,7 +54,7 @@ class RGBAColorEditor(QWidget, PropertyWidget):
                 new_color_bytes[2],
                 new_color_bytes[1],
                 new_color_bytes[0],
-                new_color_bytes[3]
+                new_color_bytes[3],
             ]
             self._update_color_label(new_color)
 

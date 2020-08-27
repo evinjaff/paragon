@@ -21,20 +21,19 @@ class SoundService(AbstractEditorService):
         self.archive = None
         self.template = self._create_entry_template()
         self.voice_set_labels = []
-        self._location_strategy = FromMappedLocationStrategy({
-            "mapped_value": "RANDOM_SOUND_HEAD",
-            "offset": 4
-        })
-        self._count_strategy = SimpleCountStrategy({
-            "type": "from_mapped",
-            "mapped_value": "RANDOM_SOUND_HEAD",
-            "width": 4
-        })
+        self._location_strategy = FromMappedLocationStrategy(
+            {"mapped_value": "RANDOM_SOUND_HEAD", "offset": 4}
+        )
+        self._count_strategy = SimpleCountStrategy(
+            {"type": "from_mapped", "mapped_value": "RANDOM_SOUND_HEAD", "width": 4}
+        )
         try:
             self._load()
             self.load_succeeded = True
         except:
-            logging.exception("An error occurred while loading FE14 sound service files.")
+            logging.exception(
+                "An error occurred while loading FE14 sound service files."
+            )
             self.load_succeeded = False
         self.voice_set_model = None
 
@@ -63,7 +62,9 @@ class SoundService(AbstractEditorService):
     def _get_set_table_end(self):
         return self.archive.addr_of_mapped_pointer("MULTI_SOUND_HEAD")
 
-    def _get_reader_at_voice_set_table(self, voice_set_label: str) -> (BinArchiveReader, int):
+    def _get_reader_at_voice_set_table(
+        self, voice_set_label: str
+    ) -> (BinArchiveReader, int):
         # Seek to the voice set's address.
         address = self.archive.addr_of_mapped_pointer(voice_set_label)
         if not address:

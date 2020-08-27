@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_project_select(object):
     def setupUi(self, project_select):
         project_select.setObjectName("project_select")
@@ -46,11 +47,26 @@ class Ui_project_select(object):
         QtCore.QMetaObject.connectSlotsByName(project_select)
 
     def retranslateUi(self, project_select):
-        project_select.setWindowTitle(QtWidgets.QApplication.translate("project_select", "MainWindow", None, -1))
-        self.remember_check_box.setText(QtWidgets.QApplication.translate("project_select", "Remember my selection.", None, -1))
-        self.toolBar.setWindowTitle(QtWidgets.QApplication.translate("project_select", "toolBar", None, -1))
-        self.action_create.setText(QtWidgets.QApplication.translate("project_select", "Create", None, -1))
-        self.action_remove.setText(QtWidgets.QApplication.translate("project_select", "Remove", None, -1))
-        self.action_move_up.setText(QtWidgets.QApplication.translate("project_select", "Move Up", None, -1))
-        self.action_move_down.setText(QtWidgets.QApplication.translate("project_select", "Move Down", None, -1))
-
+        project_select.setWindowTitle(
+            QtWidgets.QApplication.translate("project_select", "MainWindow", None, -1)
+        )
+        self.remember_check_box.setText(
+            QtWidgets.QApplication.translate(
+                "project_select", "Remember my selection.", None, -1
+            )
+        )
+        self.toolBar.setWindowTitle(
+            QtWidgets.QApplication.translate("project_select", "toolBar", None, -1)
+        )
+        self.action_create.setText(
+            QtWidgets.QApplication.translate("project_select", "Create", None, -1)
+        )
+        self.action_remove.setText(
+            QtWidgets.QApplication.translate("project_select", "Remove", None, -1)
+        )
+        self.action_move_up.setText(
+            QtWidgets.QApplication.translate("project_select", "Move Up", None, -1)
+        )
+        self.action_move_down.setText(
+            QtWidgets.QApplication.translate("project_select", "Move Down", None, -1)
+        )

@@ -26,8 +26,12 @@ class GenericConversationService(AbstractEditorService):
             real_path = open_files_service.to_valid_path_in_filesystem(file_name)
             if not real_path:
                 raise ValueError("Invalid path: " + file_name)
-            message_archive = open_files_service.open_message_archive(real_path, localized=False)
-            editor = FE14ConversationEditor(message_archive, title=base_name, owner=self)
+            message_archive = open_files_service.open_message_archive(
+                real_path, localized=False
+            )
+            editor = FE14ConversationEditor(
+                message_archive, title=base_name, owner=self
+            )
             self.editors[real_path] = editor
             return editor
         except:

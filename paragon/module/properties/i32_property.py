@@ -8,7 +8,9 @@ from .plain_value_property import PlainValueProperty
 class I32Property(PlainValueProperty):
     def __init__(self, name, value=0):
         super().__init__(name)
-        self.editor_factory = lambda: IntegerPropertySpinBox(self.name, -2147483647, 2147483647)
+        self.editor_factory = lambda: IntegerPropertySpinBox(
+            self.name, -2147483647, 2147483647
+        )
         self.value = value
 
     def copy_to(self, destination):

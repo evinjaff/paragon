@@ -37,16 +37,16 @@ def _create_standard_item(data, text: str, key: str) -> QStandardItem:
 class ExportChangesModel(QStandardItemModel):
     def __init__(self, parent=None):
         super().__init__(parent)
-        module_item = _create_expandable_item(locator.get_scoped("ModuleService"), "Modules", "Modules")
+        module_item = _create_expandable_item(
+            locator.get_scoped("ModuleService"), "Modules", "Modules"
+        )
         common_modules_item = _create_expandable_item(
             locator.get_scoped("CommonModuleService"),
             "Common Modules",
-            "Common Modules"
+            "Common Modules",
         )
         services_item = _create_expandable_item(
-            locator.get_scoped("DedicatedEditorsService"),
-            "Services",
-            "Services"
+            locator.get_scoped("DedicatedEditorsService"), "Services", "Services"
         )
         self.appendRow(module_item)
         self.appendRow(common_modules_item)
@@ -101,11 +101,22 @@ class ExportChangesModel(QStandardItemModel):
 
     def restore_selections_from_project(self):
         project = locator.get_scoped("Driver").get_project()
-        if project.export_selections and locator.get_static("SettingsService").get_remember_exports():
-            self._recursive_restore_selections_from_project(self.invisibleRootItem(), project.export_selections)
+        if (
+            project.export_selections
+            and locator.get_static("SettingsService").get_remember_exports()
+        ):
+            self._recursive_restore_selections_from_project(
+                self.invisibleRootItem(), project.export_selections
+            )
 
-    def _recursive_restore_selections_from_project(self, item: QStandardItem, selections):
-        if item.rowCount() == 0 and not item.data(_EXPANDABLE_ROLE) or not isinstance(selections, dict):
+    def _recursive_restore_selections_from_project(
+        self, item: QStandardItem, selections
+    ):
+        if (
+            item.rowCount() == 0
+            and not item.data(_EXPANDABLE_ROLE)
+            or not isinstance(selections, dict)
+        ):
             return
         else:
             for i in range(0, item.rowCount()):
@@ -116,12 +127,16 @@ class ExportChangesModel(QStandardItemModel):
                     self._update_data_for_item(child)
                     if child_capabilities.is_selectable():
                         child.setCheckState(QtCore.Qt.Checked)
-                    self._recursive_restore_selections_from_project(child, selections[child_key])
+                    self._recursive_restore_selections_from_project(
+                        child, selections[child_key]
+                    )
 
     def save_selected_items_tree(self):
         project = locator.get_scoped("Driver").get_project()
         if locator.get_static("SettingsService").get_remember_exports():
-            project.export_selections = self._recursive_get_selected_items_tree(self.invisibleRootItem())
+            project.export_selections = self._recursive_get_selected_items_tree(
+                self.invisibleRootItem()
+            )
 
     def _recursive_get_selected_items_tree(self, item: QStandardItem):
         if item.rowCount() == 0 and item.checkState() == QtCore.Qt.Checked:
@@ -156,7 +171,9 @@ class ExportChangesModel(QStandardItemModel):
                 self._recursive_update_check_state(item.child(i), new_state)
             self.blockSignals(False)
 
-    def _recursive_update_check_state(self, item: QStandardItem, new_state: QtCore.Qt.CheckState):
+    def _recursive_update_check_state(
+        self, item: QStandardItem, new_state: QtCore.Qt.CheckState
+    ):
         if item.rowCount() != 0:
             for i in range(0, item.rowCount()):
                 self._recursive_update_check_state(item.child(i), new_state)

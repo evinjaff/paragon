@@ -10,7 +10,12 @@ class DefaultModuleExtension(AbstractModuleExtension):
     def on_remove(self, module: Module, target_entry: PropertyContainer):
         pass
 
-    def on_copy(self, module: Module, source_entry: PropertyContainer, target_entry: PropertyContainer):
+    def on_copy(
+        self,
+        module: Module,
+        source_entry: PropertyContainer,
+        target_entry: PropertyContainer,
+    ):
         pass
 
     def get_display_name(self, module: Module, entry: PropertyContainer):

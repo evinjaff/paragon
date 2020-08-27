@@ -26,7 +26,9 @@ class FE14ChapterEditor(Ui_FE14ChapterEditor):
         self.chapter_list_view.setModel(self.proxy_model)
 
         self.chapter_search_bar.textChanged.connect(self._update_filter)
-        self.chapter_list_view.selectionModel().currentRowChanged.connect(self._update_selection)
+        self.chapter_list_view.selectionModel().currentRowChanged.connect(
+            self._update_selection
+        )
         self.add_chapter_action.triggered.connect(self._on_add_chapter_triggered)
         self.hide_selector_action.triggered.connect(self._on_toggle_selector_triggered)
 
@@ -38,7 +40,9 @@ class FE14ChapterEditor(Ui_FE14ChapterEditor):
     def _update_selection(self, index):
         service = locator.get_scoped("ChapterService")
         data = self.proxy_model.data(index, QtCore.Qt.UserRole)
-        chapter_data: Optional[ChapterData] = service.get_chapter_data_from_chapter(data) if data else None
+        chapter_data: Optional[ChapterData] = (
+            service.get_chapter_data_from_chapter(data) if data else None
+        )
         person_module = chapter_data.person if chapter_data else None
         message_archive = chapter_data.conversation_data if chapter_data else None
         self.config_tab.update_chapter_data(chapter_data)
@@ -49,24 +53,30 @@ class FE14ChapterEditor(Ui_FE14ChapterEditor):
     def _on_add_chapter_triggered(self):
         # Get the chapter to use as a base
         choices = self._create_chapter_choice_list()
-        (choice, ok) = QInputDialog.getItem(self, "Select Base Chapter", "Base Chapter", choices)
+        (choice, ok) = QInputDialog.getItem(
+            self, "Select Base Chapter", "Base Chapter", choices
+        )
         if not ok:
             return
         source_chapter = self._get_chapter_from_choice(choice, choices)
 
         # Get the desired CID.
-        (desired_cid, ok) = QInputDialog.getText(self, "Enter a CID for the new chapter.", "CID")
+        (desired_cid, ok) = QInputDialog.getText(
+            self, "Enter a CID for the new chapter.", "CID"
+        )
         if not ok:
             return
 
         # Validate the CID.
         service = locator.get_scoped("ChapterService")
         if service.is_cid_in_use(desired_cid):
-            self.error_dialog = ErrorDialog("The CID \"" + desired_cid + "\" is already in use.")
+            self.error_dialog = ErrorDialog(
+                'The CID "' + desired_cid + '" is already in use.'
+            )
             self.error_dialog.show()
             return
         if not desired_cid.startswith("CID_"):
-            self.error_dialog = ErrorDialog("CID must start with the \"CID_\"")
+            self.error_dialog = ErrorDialog('CID must start with the "CID_"')
             self.error_dialog.show()
             return
 

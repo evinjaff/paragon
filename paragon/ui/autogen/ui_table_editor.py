@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_TableEditor(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -73,12 +74,27 @@ class Ui_TableEditor(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "MainWindow", None, -1))
-        self.search_bar.setPlaceholderText(QtWidgets.QApplication.translate("MainWindow", "Search...", None, -1))
-        self.toolBar.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "toolBar", None, -1))
-        self.action_add.setText(QtWidgets.QApplication.translate("MainWindow", "Add", None, -1))
-        self.action_delete.setText(QtWidgets.QApplication.translate("MainWindow", "Delete", None, -1))
-        self.action_export_csv.setText(QtWidgets.QApplication.translate("MainWindow", "Export to CSV", None, -1))
-        self.action_import_csv.setText(QtWidgets.QApplication.translate("MainWindow", "Import CSV", None, -1))
-        self.action_copy_to.setText(QtWidgets.QApplication.translate("MainWindow", "Copy To", None, -1))
-
+        MainWindow.setWindowTitle(
+            QtWidgets.QApplication.translate("MainWindow", "MainWindow", None, -1)
+        )
+        self.search_bar.setPlaceholderText(
+            QtWidgets.QApplication.translate("MainWindow", "Search...", None, -1)
+        )
+        self.toolBar.setWindowTitle(
+            QtWidgets.QApplication.translate("MainWindow", "toolBar", None, -1)
+        )
+        self.action_add.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Add", None, -1)
+        )
+        self.action_delete.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Delete", None, -1)
+        )
+        self.action_export_csv.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Export to CSV", None, -1)
+        )
+        self.action_import_csv.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Import CSV", None, -1)
+        )
+        self.action_copy_to.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Copy To", None, -1)
+        )

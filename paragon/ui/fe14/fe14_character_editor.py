@@ -4,7 +4,15 @@ from typing import Optional
 from PySide2 import QtCore
 from PySide2.QtCore import QSortFilterProxyModel, QModelIndex, QPoint
 from PySide2.QtGui import QPixmap, QKeySequence
-from PySide2.QtWidgets import QGraphicsScene, QInputDialog, QMenu, QShortcut, QWidget, QHBoxLayout, QScrollArea
+from PySide2.QtWidgets import (
+    QGraphicsScene,
+    QInputDialog,
+    QMenu,
+    QShortcut,
+    QWidget,
+    QHBoxLayout,
+    QScrollArea,
+)
 
 from paragon.module.properties.property_container import PropertyContainer
 from paragon.module.table_module import TableModule
@@ -21,31 +29,41 @@ class FE14CharacterEditor(Ui_FE14CharacterEditor):
     def __init__(self, is_person=False, parent=None):
         super().__init__(parent)
         self.is_person = is_person
-        self.module: TableModule = locator.get_scoped("ModuleService").get_module("Characters")
+        self.module: TableModule = locator.get_scoped("ModuleService").get_module(
+            "Characters"
+        )
         self.proxy_model = QSortFilterProxyModel()
         self.proxy_model.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)
         self.proxy_model.setSourceModel(self.module.entries_model)
         self.characters_list_view.setModel(self.proxy_model)
         self.selection: Optional[PropertyContainer] = None
 
-        self.character_details_form_1 = PropertyForm(self.module.element_template, category="character_description_1")
+        self.character_details_form_1 = PropertyForm(
+            self.module.element_template, category="character_description_1"
+        )
         self.character_details_form_contents_1.setLayout(self.character_details_form_1)
-        self.character_details_form_2 = PropertyForm(self.module.element_template, category="character_description_2")
+        self.character_details_form_2 = PropertyForm(
+            self.module.element_template, category="character_description_2"
+        )
         self.character_details_form_contents_2.setLayout(self.character_details_form_2)
         self.character_details_form_2.fix_editor_width(100)
-        self.stats_editor = MergedStatsEditor(["Bases", "Growths", "Modifiers", "Penalties", "Bonuses"])
+        self.stats_editor = MergedStatsEditor(
+            ["Bases", "Growths", "Modifiers", "Penalties", "Bonuses"]
+        )
         self.stats_form = PropertyForm(self.module.element_template, category="stats")
         self.stats_layout.addWidget(self.stats_editor)
         self.stats_layout.addLayout(self.stats_form)
-        self.skills_form = PropertyForm(self.module.element_template, category="skills", sort_editors=True)
+        self.skills_form = PropertyForm(
+            self.module.element_template, category="skills", sort_editors=True
+        )
         self.skills_contents.setLayout(self.skills_form)
         self.flags_editor = MergedFlagsEditor(
             ["Bitflags (1)", "Bitflags (2)", "Bitflags (3)", "Bitflags (4)"],
-            self.module.element_template
+            self.module.element_template,
         )
         self.flags_editor_2 = MergedFlagsEditor(
             ["Bitflags (5)", "Bitflags (6)", "Bitflags (7)", "Bitflags (8)"],
-            self.module.element_template
+            self.module.element_template,
         )
         self.misc_form = PropertyForm(self.module.element_template, category="misc")
         self.misc_layout.addWidget(self.flags_editor)
@@ -53,7 +71,9 @@ class FE14CharacterEditor(Ui_FE14CharacterEditor):
         self.misc_layout.addLayout(self.misc_form)
         self.ids_form = PropertyForm(self.module.element_template, category="ids")
         self.ids_tab.setLayout(self.ids_form)
-        self.classes_form = PropertyForm(self.module.element_template, category="classes", sort_editors=True)
+        self.classes_form = PropertyForm(
+            self.module.element_template, category="classes", sort_editors=True
+        )
         self.classes_tab.setLayout(self.classes_form)
         if not self.is_person:
             self.dialogue_tab = DialogueEditor()
@@ -67,13 +87,17 @@ class FE14CharacterEditor(Ui_FE14CharacterEditor):
             self.supports_layout.addWidget(self.supports_widget)
             self.supports_layout.addWidget(self.supports_scroll)
             self.supports_tab.setLayout(self.supports_layout)
-            self.supports_form = PropertyForm(self.module.element_template, category="supports")
+            self.supports_form = PropertyForm(
+                self.module.element_template, category="supports"
+            )
             self.supports_scroll_contents.setLayout(self.supports_form)
             self.tab_widget.addTab(self.supports_tab, "Supports")
             self.tab_widget.addTab(self.dialogue_tab, "Dialogue")
 
         self.context_menu = QMenu(self)
-        self.context_menu.addActions([self.action_add, self.action_remove, self.action_copy_to])
+        self.context_menu.addActions(
+            [self.action_add, self.action_remove, self.action_copy_to]
+        )
         self.clear_selection_shortcut = QShortcut(QKeySequence.Cancel, self)
 
         self._install_signals()
@@ -92,8 +116,12 @@ class FE14CharacterEditor(Ui_FE14CharacterEditor):
         self.context_menu.exec_(self.characters_list_view.mapToGlobal(point))
 
     def _install_signals(self):
-        self.characters_list_view.selectionModel().currentRowChanged.connect(self._update_selection)
-        self.characters_list_view.customContextMenuRequested.connect(self._on_context_menu_requested)
+        self.characters_list_view.selectionModel().currentRowChanged.connect(
+            self._update_selection
+        )
+        self.characters_list_view.customContextMenuRequested.connect(
+            self._on_context_menu_requested
+        )
         self.search_bar.textChanged.connect(self._update_filter)
         self.action_add.triggered.connect(self._on_add_character_triggered)
         self.action_remove.triggered.connect(self._on_remove_character_triggered)
@@ -122,14 +150,18 @@ class FE14CharacterEditor(Ui_FE14CharacterEditor):
             self.supports_widget.update_target(self.selection)
             self.supports_form.update_target(self.selection)
         if self.selection:
-            locator.get_scoped("SpriteService").get_sprite_for_character(self.selection, 0)
+            locator.get_scoped("SpriteService").get_sprite_for_character(
+                self.selection, 0
+            )
         self.action_remove.setEnabled(self.selection is not None)
         self.action_copy_to.setEnabled(self.selection is not None)
         self._update_portrait_box()
 
     def _update_portrait_box(self):
         portrait_service = locator.get_scoped("PortraitService")
-        mini_portraits = portrait_service.get_sorted_portraits_for_character(self.selection, "bu")
+        mini_portraits = portrait_service.get_sorted_portraits_for_character(
+            self.selection, "bu"
+        )
         if mini_portraits:
             _, texture = mini_portraits[0]
             scene = QGraphicsScene()
@@ -162,11 +194,17 @@ class FE14CharacterEditor(Ui_FE14CharacterEditor):
         logging.info("Beginning copy to for " + self.module.name)
         choices = []
         for i in range(0, len(self.module.entries)):
-            choices.append(str(i + 1) + ". " + self.module.entries[i].get_display_name())
-        choice = QInputDialog.getItem(self, "Select Destination", "Destination", choices)
+            choices.append(
+                str(i + 1) + ". " + self.module.entries[i].get_display_name()
+            )
+        choice = QInputDialog.getItem(
+            self, "Select Destination", "Destination", choices
+        )
         if choice[1]:
             for i in range(0, len(choices)):
                 if choice[0] == choices[i]:
                     self.selection.copy_to(self.module.entries[i])
         else:
-            logging.info("No choice selected for " + self.module.name + " copy to. Aborting.")
+            logging.info(
+                "No choice selected for " + self.module.name + " copy to. Aborting."
+            )

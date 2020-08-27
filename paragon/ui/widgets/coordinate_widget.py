@@ -34,7 +34,9 @@ class CoordinateWidget(QWidget, PropertyWidget):
             if buffer[index] != value:
                 if not self.is_disable_write_back:
                     buffer[index] = self._signed_to_unsigned(value)
-                self.position_changed.emit(self.x_spinbox.value(), self.y_spinbox.value())
+                self.position_changed.emit(
+                    self.x_spinbox.value(), self.y_spinbox.value()
+                )
 
     def _on_target_changed(self):
         if self.target:

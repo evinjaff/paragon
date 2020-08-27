@@ -1,12 +1,20 @@
 import struct
-from PySide2.QtWidgets import QSpinBox, QLabel, QFormLayout, QGroupBox, QPushButton, QLineEdit, QWidget
+from PySide2.QtWidgets import (
+    QSpinBox,
+    QLabel,
+    QFormLayout,
+    QGroupBox,
+    QPushButton,
+    QLineEdit,
+    QWidget,
+)
 from paragon.model.project import Game
 from paragon.services import service_locator
 from paragon.ui.widgets.property_widget import PropertyWidget
 from .stats_editor import EDITOR_LABELS, EDITOR_LABELS_SOV
 
 
-class ToggleStatsEditor (QGroupBox, PropertyWidget):
+class ToggleStatsEditor(QGroupBox, PropertyWidget):
     def __init__(self, target_property_name):
         QGroupBox.__init__(self)
         PropertyWidget.__init__(self, target_property_name)
@@ -27,7 +35,7 @@ class ToggleStatsEditor (QGroupBox, PropertyWidget):
             QSpinBox(),
             QSpinBox(),
             QSpinBox(),
-            QSpinBox()
+            QSpinBox(),
         ]
         labels = self._get_labels_for_project()
         for i in range(0, 8):

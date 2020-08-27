@@ -24,7 +24,9 @@ class FE14ConversationWidget(QGraphicsView):
         self.setHorizontalScrollBarPolicy(QtGui.Qt.ScrollBarAlwaysOff)
         self.setVerticalScrollBarPolicy(QtGui.Qt.ScrollBarAlwaysOff)
 
-        self.background = self.scene.addPixmap(locator.get_scoped("ConversationService").background())
+        self.background = self.scene.addPixmap(
+            locator.get_scoped("ConversationService").background()
+        )
         self._busts = self._create_busts()
         self._message_view: Optional[QGraphicsItem] = None
 
@@ -46,7 +48,16 @@ class FE14ConversationWidget(QGraphicsView):
         position_3_bust.setPos(-30, 0.0)
         position_6_bust.setPos(_BG_WIDTH - 256 + 30, 0.0)
         position_7_bust.setPos(_BG_WIDTH - 256 + 30, 0.0)
-        return [position_0_bust, None, None, position_3_bust, None, None, position_6_bust, position_7_bust]
+        return [
+            position_0_bust,
+            None,
+            None,
+            position_3_bust,
+            None,
+            None,
+            position_6_bust,
+            position_7_bust,
+        ]
 
     @staticmethod
     def is_position_valid(position: int, mode: int):
@@ -73,15 +84,18 @@ class FE14ConversationWidget(QGraphicsView):
             raise ValueError
         self._busts[position].clear()
 
-    def message(self, text: str, name: str, speaker_position: int, window_type="standard", mode=0):
+    def message(
+        self,
+        text: str,
+        name: str,
+        speaker_position: int,
+        window_type="standard",
+        mode=0,
+    ):
         self.clear_message()
         left = speaker_position == 3
         self._message_view = self.message_draw_strategy.draw_message(
-            text,
-            name,
-            window_type,
-            mode,
-            left
+            text, name, window_type, mode, left
         )
         for i, bust in enumerate(self._busts):
             if i == speaker_position:

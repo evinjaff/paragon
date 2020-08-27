@@ -37,7 +37,9 @@ class PropertyForm(QFormLayout):
             self.addRow(key, editor)
 
     @staticmethod
-    def create_with_scroll(template: PropertyContainer) -> (QScrollArea, "PropertyForm"):
+    def create_with_scroll(
+        template: PropertyContainer,
+    ) -> (QScrollArea, "PropertyForm"):
         form = PropertyForm(template)
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)

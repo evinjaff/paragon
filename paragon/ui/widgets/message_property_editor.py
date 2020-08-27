@@ -2,7 +2,7 @@ from PySide2.QtWidgets import QWidget, QVBoxLayout, QLineEdit
 from paragon.ui.widgets.property_widget import PropertyWidget
 
 
-class MessagePropertyEditor (QWidget, PropertyWidget):
+class MessagePropertyEditor(QWidget, PropertyWidget):
     def __init__(self, target_property_name):
         QWidget.__init__(self)
         PropertyWidget.__init__(self, target_property_name)

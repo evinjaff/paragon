@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_fe14_chapter_editor(object):
     def setupUi(self, chapter_editor):
         chapter_editor.setObjectName("chapter_editor")
@@ -20,7 +21,9 @@ class Ui_fe14_chapter_editor(object):
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
         self.splitter.setObjectName("splitter")
         self.widget_2 = QtWidgets.QWidget(self.splitter)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget_2.sizePolicy().hasHeightForWidth())
@@ -38,7 +41,9 @@ class Ui_fe14_chapter_editor(object):
         self.search_field.setObjectName("search_field")
         self.horizontalLayout_2.addWidget(self.search_field)
         self.add_button = QtWidgets.QPushButton(self.widget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.add_button.sizePolicy().hasHeightForWidth())
@@ -54,7 +59,9 @@ class Ui_fe14_chapter_editor(object):
         self.horizontalLayout_2.addWidget(self.remove_button)
         self.verticalLayout_2.addWidget(self.widget)
         self.list_view = QtWidgets.QListView(self.widget_2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.list_view.sizePolicy().hasHeightForWidth())
@@ -72,8 +79,15 @@ class Ui_fe14_chapter_editor(object):
         QtCore.QMetaObject.connectSlotsByName(chapter_editor)
 
     def retranslateUi(self, chapter_editor):
-        chapter_editor.setWindowTitle(QtWidgets.QApplication.translate("chapter_editor", "Form", None, -1))
-        self.search_field.setPlaceholderText(QtWidgets.QApplication.translate("chapter_editor", "Search...", None, -1))
-        self.add_button.setText(QtWidgets.QApplication.translate("chapter_editor", "+", None, -1))
-        self.remove_button.setText(QtWidgets.QApplication.translate("chapter_editor", "-", None, -1))
-
+        chapter_editor.setWindowTitle(
+            QtWidgets.QApplication.translate("chapter_editor", "Form", None, -1)
+        )
+        self.search_field.setPlaceholderText(
+            QtWidgets.QApplication.translate("chapter_editor", "Search...", None, -1)
+        )
+        self.add_button.setText(
+            QtWidgets.QApplication.translate("chapter_editor", "+", None, -1)
+        )
+        self.remove_button.setText(
+            QtWidgets.QApplication.translate("chapter_editor", "-", None, -1)
+        )

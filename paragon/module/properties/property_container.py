@@ -14,7 +14,9 @@ from paragon.module.properties.i8_property import I8Property
 from paragon.module.properties.mapped_property import MappedProperty
 from paragon.module.properties.message_property import MessageProperty
 from paragon.module.properties.reference_property import ReferenceProperty
-from paragon.module.properties.self_reference_pointer_property import SelfReferencePointerProperty
+from paragon.module.properties.self_reference_pointer_property import (
+    SelfReferencePointerProperty,
+)
 from paragon.module.properties.string_property import StringProperty
 from paragon.module.properties.suffix_property import SuffixProperty
 from paragon.module.properties.u16_property import U16Property
@@ -43,6 +45,7 @@ class PropertyContainer:
     @staticmethod
     def from_json(js):
         from paragon.module.properties.pointer_property import PointerProperty
+
         properties = {
             "pointer": PointerProperty,
             "self_reference": SelfReferencePointerProperty,
@@ -59,7 +62,7 @@ class PropertyContainer:
             "i16": I16Property,
             "i32": I32Property,
             "u32": U32Property,
-            "f32": F32Property
+            "f32": F32Property,
         }
 
         con = PropertyContainer()
@@ -97,7 +100,9 @@ class PropertyContainer:
 
     def set_key(self, key: str):
         if not self.key_property_name:
-            raise NotImplementedError("Cannot set a key for a container which has no key properties.")
+            raise NotImplementedError(
+                "Cannot set a key for a container which has no key properties."
+            )
         self._properties[self.key_property_name] = key
 
     def has_key_property(self) -> bool:
@@ -119,7 +124,9 @@ class PropertyContainer:
         data_to_export = {}
         for property_key in properties_to_export:
             if property_key not in self._properties:
-                raise KeyError("Attempted to export the non-existent property %s." % property_key)
+                raise KeyError(
+                    "Attempted to export the non-existent property %s." % property_key
+                )
             else:
                 data_to_export[property_key] = self._properties[property_key].export()
         return data_to_export
@@ -129,18 +136,21 @@ class PropertyContainer:
             if property_key == "__CREATE_NEW__":
                 continue
             if property_key not in self._properties:
-                raise KeyError("Cannot import values into non-existent property %s." % property_key)
+                raise KeyError(
+                    "Cannot import values into non-existent property %s." % property_key
+                )
             self._properties[property_key].import_values(values[property_key])
 
     def children(self) -> List[Tuple[AbstractProperty, str, str]]:
-        return [(prop, prop.name, prop.name) for prop in self._properties.values() if prop.exportable]
+        return [
+            (prop, prop.name, prop.name)
+            for prop in self._properties.values()
+            if prop.exportable
+        ]
 
     @staticmethod
     def export_capabilities() -> ExportCapabilities:
-        capabilities = [
-            ExportCapability.Selectable,
-            ExportCapability.Appendable
-        ]
+        capabilities = [ExportCapability.Selectable, ExportCapability.Appendable]
         return ExportCapabilities(capabilities)
 
     def copy_to(self, other: "PropertyContainer"):
@@ -155,7 +165,11 @@ class PropertyContainer:
 
     def __setitem__(self, key: str, value: AbstractProperty):
         from paragon.module.properties.pointer_property import PointerProperty
-        if type(value) is SelfReferencePointerProperty and key not in self.self_reference_properties:
+
+        if (
+            type(value) is SelfReferencePointerProperty
+            and key not in self.self_reference_properties
+        ):
             self.self_reference_properties.append(key)
         elif type(value) is PointerProperty and key not in self.pointer_properties:
             self.pointer_properties.append(key)

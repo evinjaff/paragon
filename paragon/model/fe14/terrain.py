@@ -67,7 +67,7 @@ class Terrain:
             "Border Size X": self.border_size_x,
             "Border Size Y": self.border_size_y,
             "Trimmed Size X": self.trimmed_size_x,
-            "Trimmed Size Y": self.trimmed_size_y
+            "Trimmed Size Y": self.trimmed_size_y,
         }
         return adapter
 

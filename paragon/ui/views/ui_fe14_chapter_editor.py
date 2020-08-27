@@ -1,4 +1,15 @@
-from PySide2.QtWidgets import QMainWindow, QToolBar, QAction, QListView, QLineEdit, QVBoxLayout, QTabWidget, QWidget, QHBoxLayout, QFrame
+from PySide2.QtWidgets import (
+    QMainWindow,
+    QToolBar,
+    QAction,
+    QListView,
+    QLineEdit,
+    QVBoxLayout,
+    QTabWidget,
+    QWidget,
+    QHBoxLayout,
+    QFrame,
+)
 
 from paragon.ui.fe14.fe14_chapter_config_tab import FE14ChapterConfigTab
 from paragon.ui.fe14.fe14_character_editor import FE14CharacterEditor

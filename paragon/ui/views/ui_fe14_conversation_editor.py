@@ -1,6 +1,19 @@
 from PySide2 import QtGui
-from PySide2.QtWidgets import QFrame, QFormLayout, QLineEdit, QCheckBox, QMainWindow, QHBoxLayout, QPushButton, \
-    QVBoxLayout, QStatusBar, QWidget, QToolBar, QListView, QTextEdit
+from PySide2.QtWidgets import (
+    QFrame,
+    QFormLayout,
+    QLineEdit,
+    QCheckBox,
+    QMainWindow,
+    QHBoxLayout,
+    QPushButton,
+    QVBoxLayout,
+    QStatusBar,
+    QWidget,
+    QToolBar,
+    QListView,
+    QTextEdit,
+)
 
 from paragon.ui.widgets.fe14_conversation_player import FE14ConversationPlayer
 

@@ -16,13 +16,16 @@ class FE14MapEditor(Ui_FE14MapEditor):
 
         from .fe14_map_editor_dispos_controller import FE14MapEditorDisposController
         from .fe14_map_editor_terrain_controller import FE14MapEditorTerrainController
+
         self.dispos_controller = FE14MapEditorDisposController(self)
         self.terrain_controller = FE14MapEditorTerrainController(self)
         self.set_mode(False)
 
         self.toggle_mode_action.triggered.connect(self._toggle_mode)
         self.grid.coordinate_type_changed.connect(self._on_coordinate_type_changed)
-        self.model_view.customContextMenuRequested.connect(self._on_context_menu_requested)
+        self.model_view.customContextMenuRequested.connect(
+            self._on_context_menu_requested
+        )
 
     def _on_context_menu_requested(self, point: QPoint):
         self.model_view_context_menu.exec_(self.model_view.mapToGlobal(point))
@@ -48,7 +51,9 @@ class FE14MapEditor(Ui_FE14MapEditor):
             self.dispos_controller.update_selection(index)
 
     def _on_coordinate_type_changed(self):
-        self.coordinate_type_label.setText("Coordinate type: " + self.grid.coordinate_key)
+        self.coordinate_type_label.setText(
+            "Coordinate type: " + self.grid.coordinate_key
+        )
 
     def set_mode(self, is_terrain_mode: bool):
         self.is_terrain_mode = is_terrain_mode
@@ -65,10 +70,14 @@ class FE14MapEditor(Ui_FE14MapEditor):
         self.terrain_pane.hide()
         self.spawn_pane.show()
         self.model_view.setModel(model)
-        self.model_view.selectionModel().currentChanged.connect(self._on_selection_changed)
+        self.model_view.selectionModel().currentChanged.connect(
+            self._on_selection_changed
+        )
 
     def show_terrain_pane(self, model):
         self.spawn_pane.hide()
         self.terrain_pane.show()
         self.model_view.setModel(model)
-        self.model_view.selectionModel().currentChanged.connect(self._on_selection_changed)
+        self.model_view.selectionModel().currentChanged.connect(
+            self._on_selection_changed
+        )

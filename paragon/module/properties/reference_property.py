@@ -47,11 +47,15 @@ class ReferenceProperty(AbstractProperty):
         target_property.write(writer)
 
     def create_editor(self) -> QWidget:
-        return ReferencePropertyEditor(self.name, self._get_target_module(), self.target_property)
+        return ReferencePropertyEditor(
+            self.name, self._get_target_module(), self.target_property
+        )
 
     def export(self) -> Any:
         module = self._get_target_module()
-        element = module.get_element_by_property_and_value(self.target_property, self.value)
+        element = module.get_element_by_property_and_value(
+            self.target_property, self.value
+        )
         if element:
             return element.get_key()
         else:

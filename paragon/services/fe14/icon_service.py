@@ -29,18 +29,24 @@ class FE14IconService:
             return
         self._loaded = True
         assets_service = locator.get_scoped("AssetsService")
-        icons: Optional[Dict[str, Texture]] = assets_service.load_bch("/icon/Icon.bch.lz")
+        icons: Optional[Dict[str, Texture]] = assets_service.load_bch(
+            "/icon/Icon.bch.lz"
+        )
         if not icons:
             return
 
         if _SKILL_TEXTURE_KEY in icons:
             skill_icons_texture = icons[_SKILL_TEXTURE_KEY]
             icon_width, icon_height = _SKILL_ICON_DIMENSIONS
-            self._skill_icons = self._slice(skill_icons_texture, icon_width, icon_height)
+            self._skill_icons = self._slice(
+                skill_icons_texture, icon_width, icon_height
+            )
         if _SKILL2_TEXTURE_KEY in icons:
             skill2_icons_texture = icons[_SKILL2_TEXTURE_KEY]
             icon_width, icon_height = _SKILL_ICON_DIMENSIONS
-            self._skill_icons.extend(self._slice(skill2_icons_texture, icon_width, icon_height))
+            self._skill_icons.extend(
+                self._slice(skill2_icons_texture, icon_width, icon_height)
+            )
         if _ITEM_TEXTURE_KEY in icons:
             item_icons_texture = icons[_ITEM_TEXTURE_KEY]
             icon_width, icon_height = _ITEM_ICON_DIMENSIONS
@@ -48,7 +54,9 @@ class FE14IconService:
         if _FACTION_TEXTURE_KEY in icons:
             faction_icons_texture = icons[_FACTION_TEXTURE_KEY]
             icon_width, icon_height = _FACTION_ICON_DIMENSIONS
-            self._faction_icons = self._slice(faction_icons_texture, icon_width, icon_height)
+            self._faction_icons = self._slice(
+                faction_icons_texture, icon_width, icon_height
+            )
             real_faction_icons = []
             for i in range(0, len(self._faction_icons)):
                 if i not in [5, 11, 17]:
@@ -65,7 +73,10 @@ class FE14IconService:
             for c in range(0, cells_per_row):
                 x = c * cell_width
                 y = r * cell_height
-                if x + cell_width > texture.width() or y + cell_height > texture.height():
+                if (
+                    x + cell_width > texture.width()
+                    or y + cell_height > texture.height()
+                ):
                     continue
                 section = pixmap.copy(x, y, cell_width, cell_height)
                 result.append(QIcon(section))

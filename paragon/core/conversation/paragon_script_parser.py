@@ -1,15 +1,47 @@
 from operator import methodcaller
 from typing import Optional, List
 
-from paragon.model.conversation.command import Command, PlayerMentionedCommand, SetConversationTypeCommand, \
-    RepositionSpeakerCommand, LoadPortraitsCommand, PlayVoiceCommand, PlaySoundEffectCommand, PlayMusicCommand, \
-    StopMusicCommand, SetSpeakerAliasCommand, GenderDependentMessageCommand, PrintAvatarNameCommand, PauseCommand, \
-    PauseNewlineCommand, ClearMessageCommand, DeleteSpeakerCommand, SetTalkWindowPanickedCommand, \
-    SetTalkBoxScrollInCommand, CutsceneActionCommand, WaitCommand, AdjustSoundVolumeCommand, DramaticLineCommand, \
-    ConditionalFIDCommand, PlayerMarriageSceneCommand, PlayMusicWithVolumeRampCommand, CancelMusicRampCommand, \
-    SetSpeakerCommand, PrintCommand, SetEmotionCommand, PlayMessageCommand, FadeInCommand, FadeOutCommand, \
-    FadeWhiteCommand, ArgumentCommand, DramaticMusicCommand, ColorCommand, VisualEffectCommand, ForcedNewlineCommand, \
-    SetRampVolumeCommand
+from paragon.model.conversation.command import (
+    Command,
+    PlayerMentionedCommand,
+    SetConversationTypeCommand,
+    RepositionSpeakerCommand,
+    LoadPortraitsCommand,
+    PlayVoiceCommand,
+    PlaySoundEffectCommand,
+    PlayMusicCommand,
+    StopMusicCommand,
+    SetSpeakerAliasCommand,
+    GenderDependentMessageCommand,
+    PrintAvatarNameCommand,
+    PauseCommand,
+    PauseNewlineCommand,
+    ClearMessageCommand,
+    DeleteSpeakerCommand,
+    SetTalkWindowPanickedCommand,
+    SetTalkBoxScrollInCommand,
+    CutsceneActionCommand,
+    WaitCommand,
+    AdjustSoundVolumeCommand,
+    DramaticLineCommand,
+    ConditionalFIDCommand,
+    PlayerMarriageSceneCommand,
+    PlayMusicWithVolumeRampCommand,
+    CancelMusicRampCommand,
+    SetSpeakerCommand,
+    PrintCommand,
+    SetEmotionCommand,
+    PlayMessageCommand,
+    FadeInCommand,
+    FadeOutCommand,
+    FadeWhiteCommand,
+    ArgumentCommand,
+    DramaticMusicCommand,
+    ColorCommand,
+    VisualEffectCommand,
+    ForcedNewlineCommand,
+    SetRampVolumeCommand,
+)
 from paragon.model.conversation.source_position import SourcePosition
 from paragon.model.conversation.transpiler_error import TranspilerError
 from paragon.services.service_locator import locator
@@ -59,7 +91,7 @@ class ParagonScriptParser:
             "Nu": self._parse_print_avatar_name_command,
             "G": self._parse_gender_dependent_alias_command,
             "arg": self._parse_arg_command,
-            "VisualEffect": self._parse_visual_effect_command
+            "VisualEffect": self._parse_visual_effect_command,
         }
 
     def reset(self):
@@ -126,7 +158,9 @@ class ParagonScriptParser:
         if skip_whitespace_after_command:
             self._skip_whitespace()
         if command not in self._command_to_func:
-            raise TranspilerError(self._source_position(), "Unknown command $" + command)
+            raise TranspilerError(
+                self._source_position(), "Unknown command $" + command
+            )
         command = self._command_to_func[command]()
         if isinstance(command, list):
             self._commands.extend(command)
@@ -163,7 +197,10 @@ class ParagonScriptParser:
     def _expect(self, expected_char: str):
         next_char = self._next()
         if next_char != expected_char:
-            raise TranspilerError(self._source_position(), "Expected %s found %s" % (expected_char, next_char))
+            raise TranspilerError(
+                self._source_position(),
+                "Expected %s found %s" % (expected_char, next_char),
+            )
 
     def _peek(self) -> str:
         if self._position >= len(self._input):
@@ -185,7 +222,9 @@ class ParagonScriptParser:
         result = []
         while self._peek() not in end_characters:
             if error_on_eol and self._peek() == "\n":
-                raise TranspilerError(self._source_position(), "Reached EOL while parsing.")
+                raise TranspilerError(
+                    self._source_position(), "Reached EOL while parsing."
+                )
             result.append(self._next())
         return "".join(result)
 
@@ -226,7 +265,9 @@ class ParagonScriptParser:
 
     def _parse_load_portraits_command(self):
         speaker = self._read_until(["\n", "\0"]).strip()
-        translated = locator.get_scoped("ConversationService").translate_speaker_name_to_japanese(speaker)
+        translated = locator.get_scoped(
+            "ConversationService"
+        ).translate_speaker_name_to_japanese(speaker)
         return LoadPortraitsCommand(translated)
 
     def _parse_reposition_speaker_command(self):
@@ -235,7 +276,9 @@ class ParagonScriptParser:
 
     def _parse_set_speaker_command(self):
         speaker = self._read_until(["\n", "\0"]).strip()
-        translated = locator.get_scoped("ConversationService").translate_speaker_name_to_japanese(speaker)
+        translated = locator.get_scoped(
+            "ConversationService"
+        ).translate_speaker_name_to_japanese(speaker)
         return SetSpeakerCommand(translated)
 
     def _parse_set_emotion_command(self):
@@ -243,7 +286,9 @@ class ParagonScriptParser:
         self._expect("(")
         emotions = self._read_until([")"]).split(",")
         emotions = list(map(methodcaller("strip"), emotions))
-        translated = locator.get_scoped("ConversationService").translate_emotions_to_japanese(emotions)
+        translated = locator.get_scoped(
+            "ConversationService"
+        ).translate_emotions_to_japanese(emotions)
         self._expect(")")
         return SetEmotionCommand(translated)
 
@@ -341,12 +386,14 @@ class ParagonScriptParser:
         return FadeWhiteCommand(self._convert_string_to_int(string))
 
     def _parse_color_command(self):
-        args = self._parse_args([
-            self._scan_string_arg,
-            self._scan_string_arg,
-            self._scan_string_arg,
-            self._scan_string_arg
-        ])
+        args = self._parse_args(
+            [
+                self._scan_string_arg,
+                self._scan_string_arg,
+                self._scan_string_arg,
+                self._scan_string_arg,
+            ]
+        )
         for i in range(0, len(args)):
             args[i] = args[i].strip()
         return ColorCommand(args)

@@ -9,12 +9,7 @@ from paragon.ui.autogen.ui_fe14_support_editor import Ui_support_editor
 from paragon.services.service_locator import locator
 from paragon.ui.error_dialog import ErrorDialog
 
-SUPPORT_TYPE_TO_INDEX = {
-    0x140E0904: 0,
-    0xFF0E0904: 1,
-    0x120C0703: 2,
-    0xFF0C0703: 3
-}
+SUPPORT_TYPE_TO_INDEX = {0x140E0904: 0, 0xFF0E0904: 1, 0x120C0703: 2, 0xFF0C0703: 3}
 
 INDEX_TO_SUPPORT_TYPE = [0x140E0904, 0xFF0E0904, 0x120C0703, 0xFF0C0703]
 
@@ -41,9 +36,15 @@ class FE14SupportEditor(QWidget, Ui_support_editor):
         self.proxy_model.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)
         self.characters_list_view.setModel(self.proxy_model)
 
-        self.characters_list_view.selectionModel().currentRowChanged.connect(self._update_selection)
-        self.listWidget.selectionModel().currentRowChanged.connect(self._on_target_character_changed)
-        self.listWidget_2.selectionModel().currentRowChanged.connect(self._update_support_selection)
+        self.characters_list_view.selectionModel().currentRowChanged.connect(
+            self._update_selection
+        )
+        self.listWidget.selectionModel().currentRowChanged.connect(
+            self._on_target_character_changed
+        )
+        self.listWidget_2.selectionModel().currentRowChanged.connect(
+            self._update_support_selection
+        )
         self.lineEdit.textChanged.connect(self._update_filter)
         self.pushButton_2.clicked.connect(self._on_add_support_pressed)
         self.pushButton_3.clicked.connect(self._on_remove_support_pressed)
@@ -58,8 +59,10 @@ class FE14SupportEditor(QWidget, Ui_support_editor):
             self.service.check_support_id_validity()
         except:
             logging.exception("Support IDs are invalid.")
-            self.error_dialog = ErrorDialog("Support IDs are invalid. This could mean an ID was out of bounds or not "
-                                            "unique. See the log for details.")
+            self.error_dialog = ErrorDialog(
+                "Support IDs are invalid. This could mean an ID was out of bounds or not "
+                "unique. See the log for details."
+            )
             self.error_dialog.show()
             success = False
         self.setDisabled(not success)
@@ -136,7 +139,9 @@ class FE14SupportEditor(QWidget, Ui_support_editor):
         if not self.current_character or not self.current_support:
             return
         support_type = INDEX_TO_SUPPORT_TYPE[index]
-        self.service.set_support_type(self.current_character, self.current_support, support_type)
+        self.service.set_support_type(
+            self.current_character, self.current_support, support_type
+        )
 
     def _on_target_character_changed(self):
         self.pushButton_2.setEnabled(self.listWidget.currentIndex().isValid())
@@ -146,7 +151,9 @@ class FE14SupportEditor(QWidget, Ui_support_editor):
             return
         other_character = self.listWidget.currentItem().data(QtCore.Qt.UserRole)
         support_type = INDEX_TO_SUPPORT_TYPE[0]  # Default to romantic.
-        self.service.add_support_between_characters(self.current_character, other_character, support_type)
+        self.service.add_support_between_characters(
+            self.current_character, other_character, support_type
+        )
         self._refresh_lists(self.current_character)
 
     def _on_remove_support_pressed(self):

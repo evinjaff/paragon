@@ -8,12 +8,7 @@ from paragon.services.fe14.supports_service import Support
 from paragon.services.service_locator import locator
 from paragon.ui.views.ui_fe14_support_widget import Ui_FE14SupportWidget
 
-SUPPORT_TYPE_TO_INDEX = {
-    0x140E0904: 0,
-    0xFF0E0904: 1,
-    0x120C0703: 2,
-    0xFF0C0703: 3
-}
+SUPPORT_TYPE_TO_INDEX = {0x140E0904: 0, 0xFF0E0904: 1, 0x120C0703: 2, 0xFF0C0703: 3}
 
 INDEX_TO_SUPPORT_TYPE = [0x140E0904, 0xFF0E0904, 0x120C0703, 0xFF0C0703]
 
@@ -21,19 +16,27 @@ INDEX_TO_SUPPORT_TYPE = [0x140E0904, 0xFF0E0904, 0x120C0703, 0xFF0C0703]
 class FE14SupportWidget(Ui_FE14SupportWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.characters_module = locator.get_scoped("ModuleService").get_module("Characters")
+        self.characters_module = locator.get_scoped("ModuleService").get_module(
+            "Characters"
+        )
         self.service = locator.get_scoped("SupportsService")
         self.target: Optional[PropertyContainer] = None
         self.current_character: Optional[PropertyContainer] = None
         self.current_supports: Optional[List[Support]] = None
         self.current_support: Optional[Support] = None
 
-        self.characters_widget.selectionModel().currentRowChanged.connect(self._update_current_character)
-        self.supports_widget.selectionModel().currentRowChanged.connect(self._update_current_support)
+        self.characters_widget.selectionModel().currentRowChanged.connect(
+            self._update_current_character
+        )
+        self.supports_widget.selectionModel().currentRowChanged.connect(
+            self._update_current_support
+        )
         self.add_button.clicked.connect(self._on_add_support_pressed)
         self.remove_button.clicked.connect(self._on_remove_support_pressed)
         self.support_type_box.currentIndexChanged.connect(self._on_support_type_changed)
-        self.edit_conversation_button.clicked.connect(self._on_edit_conversation_pressed)
+        self.edit_conversation_button.clicked.connect(
+            self._on_edit_conversation_pressed
+        )
 
     def update_target(self, target: Optional[PropertyContainer]):
         self.target = target
@@ -74,7 +77,9 @@ class FE14SupportWidget(Ui_FE14SupportWidget):
         supported_characters = self.service.get_supported_characters(self.target)
         self._add_characters_to_list(self.supports_widget, supported_characters)
 
-    def _add_characters_to_list(self, target_list: QListWidget, characters: List[PropertyContainer]):
+    def _add_characters_to_list(
+        self, target_list: QListWidget, characters: List[PropertyContainer]
+    ):
         for character in characters:
             self._add_character_to_list(target_list, character)
 
@@ -126,7 +131,9 @@ class FE14SupportWidget(Ui_FE14SupportWidget):
             return
         other_character = self.characters_widget.currentItem().data(QtCore.Qt.UserRole)
         support_type = INDEX_TO_SUPPORT_TYPE[0]  # Default to romantic.
-        self.service.add_support_between_characters(self.target, other_character, support_type)
+        self.service.add_support_between_characters(
+            self.target, other_character, support_type
+        )
         self.characters_widget.takeItem(self.characters_widget.currentIndex().row())
         self._refresh_supports_list()
         self.supports_widget.setCurrentIndex(QtCore.QModelIndex())
@@ -144,6 +151,5 @@ class FE14SupportWidget(Ui_FE14SupportWidget):
         if not self.target or not self.current_support:
             return
         locator.get_scoped("SupportsService").open_support_conversation_for_characters(
-            self.target,
-            self.current_support.character
+            self.target, self.current_support.character
         )

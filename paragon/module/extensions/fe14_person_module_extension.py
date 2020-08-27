@@ -1,4 +1,6 @@
-from paragon.module.extensions.fe14_character_module_extension import FE14CharacterModuleExtension
+from paragon.module.extensions.fe14_character_module_extension import (
+    FE14CharacterModuleExtension,
+)
 from paragon.module.module import Module
 from paragon.module.properties.property_container import PropertyContainer
 

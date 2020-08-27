@@ -8,12 +8,31 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
-    QRect, QSize, QUrl, Qt)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QFont,
-    QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
-    QRadialGradient)
+from PySide2.QtCore import (
+    QCoreApplication,
+    QMetaObject,
+    QObject,
+    QPoint,
+    QRect,
+    QSize,
+    QUrl,
+    Qt,
+)
+from PySide2.QtGui import (
+    QBrush,
+    QColor,
+    QConicalGradient,
+    QFont,
+    QFontDatabase,
+    QIcon,
+    QLinearGradient,
+    QPalette,
+    QPainter,
+    QPixmap,
+    QRadialGradient,
+)
 from PySide2.QtWidgets import *
+
 
 class Ui_support_editor(object):
     def setupUi(self, support_editor):
@@ -40,13 +59,14 @@ class Ui_support_editor(object):
         sizePolicy1 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.characters_list_view.sizePolicy().hasHeightForWidth())
+        sizePolicy1.setHeightForWidth(
+            self.characters_list_view.sizePolicy().hasHeightForWidth()
+        )
         self.characters_list_view.setSizePolicy(sizePolicy1)
         self.characters_list_view.setMinimumSize(QSize(325, 0))
         self.characters_list_view.setBaseSize(QSize(0, 0))
 
         self.verticalLayout.addWidget(self.characters_list_view)
-
 
         self.horizontalLayout_3.addLayout(self.verticalLayout)
 
@@ -69,7 +89,9 @@ class Ui_support_editor(object):
         self.horizontalLayout_2 = QHBoxLayout(self.widget)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setSizeConstraint(QLayout.SetDefaultConstraint)
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(
+            40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum
+        )
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
@@ -85,10 +107,11 @@ class Ui_support_editor(object):
 
         self.horizontalLayout_2.addWidget(self.pushButton_3)
 
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_2 = QSpacerItem(
+            40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum
+        )
 
         self.horizontalLayout_2.addItem(self.horizontalSpacer_2)
-
 
         self.verticalLayout_2.addWidget(self.widget)
 
@@ -96,7 +119,6 @@ class Ui_support_editor(object):
         self.listWidget_2.setObjectName(u"listWidget_2")
 
         self.verticalLayout_2.addWidget(self.listWidget_2)
-
 
         self.horizontalLayout_3.addLayout(self.verticalLayout_2)
 
@@ -118,25 +140,39 @@ class Ui_support_editor(object):
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.comboBox)
 
-
         self.horizontalLayout_3.addWidget(self.widget_2)
-
 
         self.retranslateUi(support_editor)
 
         QMetaObject.connectSlotsByName(support_editor)
+
     # setupUi
 
     def retranslateUi(self, support_editor):
-        support_editor.setWindowTitle(QCoreApplication.translate("support_editor", u"Form", None))
-        self.lineEdit.setPlaceholderText(QCoreApplication.translate("support_editor", u"Search...", None))
-        self.pushButton_2.setText(QCoreApplication.translate("support_editor", u"Add", None))
-        self.pushButton_3.setText(QCoreApplication.translate("support_editor", u"Remove", None))
+        support_editor.setWindowTitle(
+            QCoreApplication.translate("support_editor", u"Form", None)
+        )
+        self.lineEdit.setPlaceholderText(
+            QCoreApplication.translate("support_editor", u"Search...", None)
+        )
+        self.pushButton_2.setText(
+            QCoreApplication.translate("support_editor", u"Add", None)
+        )
+        self.pushButton_3.setText(
+            QCoreApplication.translate("support_editor", u"Remove", None)
+        )
         self.label.setText(QCoreApplication.translate("support_editor", u"Type", None))
-        self.comboBox.setItemText(0, QCoreApplication.translate("support_editor", u"Romantic", None))
-        self.comboBox.setItemText(1, QCoreApplication.translate("support_editor", u"Platonic", None))
-        self.comboBox.setItemText(2, QCoreApplication.translate("support_editor", u"Fast Romantic", None))
-        self.comboBox.setItemText(3, QCoreApplication.translate("support_editor", u"Fast Platonic", None))
+        self.comboBox.setItemText(
+            0, QCoreApplication.translate("support_editor", u"Romantic", None)
+        )
+        self.comboBox.setItemText(
+            1, QCoreApplication.translate("support_editor", u"Platonic", None)
+        )
+        self.comboBox.setItemText(
+            2, QCoreApplication.translate("support_editor", u"Fast Romantic", None)
+        )
+        self.comboBox.setItemText(
+            3, QCoreApplication.translate("support_editor", u"Fast Platonic", None)
+        )
 
     # retranslateUi
-

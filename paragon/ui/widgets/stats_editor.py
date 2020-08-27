@@ -12,7 +12,7 @@ EDITOR_LABELS = [
     "Speed",
     "Luck",
     "Defense",
-    "Resistance"
+    "Resistance",
 ]
 
 EDITOR_LABELS_SOV = [
@@ -23,11 +23,11 @@ EDITOR_LABELS_SOV = [
     "Luck",
     "Defense",
     "Resistance",
-    "Movement"
+    "Movement",
 ]
 
 
-class StatsEditor (QGroupBox, PropertyWidget):
+class StatsEditor(QGroupBox, PropertyWidget):
     def __init__(self, target_property_name):
         QGroupBox.__init__(self)
         PropertyWidget.__init__(self, target_property_name)
@@ -41,7 +41,7 @@ class StatsEditor (QGroupBox, PropertyWidget):
             QSpinBox(),
             QSpinBox(),
             QSpinBox(),
-            QSpinBox()
+            QSpinBox(),
         ]
 
         labels = self._get_labels_for_project()
@@ -51,14 +51,30 @@ class StatsEditor (QGroupBox, PropertyWidget):
             layout.addRow(QLabel(labels[i]), editor)
             self.setLayout(layout)
 
-        self.editors[0].valueChanged.connect(lambda: self._on_edit(0, self.editors[0].value()))
-        self.editors[1].valueChanged.connect(lambda: self._on_edit(1, self.editors[1].value()))
-        self.editors[2].valueChanged.connect(lambda: self._on_edit(2, self.editors[2].value()))
-        self.editors[3].valueChanged.connect(lambda: self._on_edit(3, self.editors[3].value()))
-        self.editors[4].valueChanged.connect(lambda: self._on_edit(4, self.editors[4].value()))
-        self.editors[5].valueChanged.connect(lambda: self._on_edit(5, self.editors[5].value()))
-        self.editors[6].valueChanged.connect(lambda: self._on_edit(6, self.editors[6].value()))
-        self.editors[7].valueChanged.connect(lambda: self._on_edit(7, self.editors[7].value()))
+        self.editors[0].valueChanged.connect(
+            lambda: self._on_edit(0, self.editors[0].value())
+        )
+        self.editors[1].valueChanged.connect(
+            lambda: self._on_edit(1, self.editors[1].value())
+        )
+        self.editors[2].valueChanged.connect(
+            lambda: self._on_edit(2, self.editors[2].value())
+        )
+        self.editors[3].valueChanged.connect(
+            lambda: self._on_edit(3, self.editors[3].value())
+        )
+        self.editors[4].valueChanged.connect(
+            lambda: self._on_edit(4, self.editors[4].value())
+        )
+        self.editors[5].valueChanged.connect(
+            lambda: self._on_edit(5, self.editors[5].value())
+        )
+        self.editors[6].valueChanged.connect(
+            lambda: self._on_edit(6, self.editors[6].value())
+        )
+        self.editors[7].valueChanged.connect(
+            lambda: self._on_edit(7, self.editors[7].value())
+        )
 
     @staticmethod
     def _get_labels_for_project():

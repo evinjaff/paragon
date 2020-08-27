@@ -17,12 +17,20 @@ _LANGUAGE_NUM_TO_NAME = [
     "French",
     "Spanish",
     "German",
-    "Italian"
+    "Italian",
 ]
 
 
 class Project:
-    def __init__(self, rom_path: str, patch_path: str, game: int, language: int, export_selections=None, metadata=None):
+    def __init__(
+        self,
+        rom_path: str,
+        patch_path: str,
+        game: int,
+        language: int,
+        export_selections=None,
+        metadata=None,
+    ):
         logging.info("Creating project.")
         if not os.path.isdir(rom_path) or not os.path.isdir(patch_path):
             logging.error("Invalid rom or patch directory. Aborting.")
@@ -38,11 +46,17 @@ class Project:
         self.metadata = {}
 
         if self.game == Game.FE13.value:
-            self.filesystem = fefeditor2.create_fe13_file_system(self.rom_path, self.patch_path, self.language)
+            self.filesystem = fefeditor2.create_fe13_file_system(
+                self.rom_path, self.patch_path, self.language
+            )
         elif self.game == Game.FE14.value:
-            self.filesystem = fefeditor2.create_fe14_file_system(self.rom_path, self.patch_path, self.language)
+            self.filesystem = fefeditor2.create_fe14_file_system(
+                self.rom_path, self.patch_path, self.language
+            )
         elif self.game == Game.FE15.value:
-            self.filesystem = fefeditor2.create_fe15_file_system(self.rom_path, self.patch_path, self.language)
+            self.filesystem = fefeditor2.create_fe15_file_system(
+                self.rom_path, self.patch_path, self.language
+            )
         else:
             logging.error("Unrecognized game. Aborting project creation.")
             raise NotImplementedError
@@ -57,7 +71,9 @@ class Project:
         patch_path = js["patch_path"]
         export_selections = js.get("export_selections")
         metadata = js.get("metadata", {})
-        return Project(rom_path, patch_path, game, language, export_selections, metadata)
+        return Project(
+            rom_path, patch_path, game, language, export_selections, metadata
+        )
 
     def to_dict(self):
         return {
@@ -66,7 +82,7 @@ class Project:
             "game": self.game,
             "language": self.language,
             "export_selections": self.export_selections,
-            "metadata": self.metadata
+            "metadata": self.metadata,
         }
 
     def get_language_name(self):

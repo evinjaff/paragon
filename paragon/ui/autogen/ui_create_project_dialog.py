@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_CreateProject(object):
     def setupUi(self, CreateProject):
         CreateProject.setObjectName("CreateProject")
@@ -33,7 +34,9 @@ class Ui_CreateProject(object):
         self.rom_button.setMaximumSize(QtCore.QSize(40, 16777215))
         self.rom_button.setObjectName("rom_button")
         self.horizontalLayout.addWidget(self.rom_button)
-        self.formLayout.setLayout(0, QtWidgets.QFormLayout.FieldRole, self.horizontalLayout)
+        self.formLayout.setLayout(
+            0, QtWidgets.QFormLayout.FieldRole, self.horizontalLayout
+        )
         self.label_2 = QtWidgets.QLabel(self.widget)
         self.label_2.setObjectName("label_2")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_2)
@@ -59,7 +62,9 @@ class Ui_CreateProject(object):
         self.project_path_button.setMaximumSize(QtCore.QSize(40, 16777215))
         self.project_path_button.setObjectName("project_path_button")
         self.horizontalLayout_2.addWidget(self.project_path_button)
-        self.formLayout.setLayout(1, QtWidgets.QFormLayout.FieldRole, self.horizontalLayout_2)
+        self.formLayout.setLayout(
+            1, QtWidgets.QFormLayout.FieldRole, self.horizontalLayout_2
+        )
         self.label_4 = QtWidgets.QLabel(self.widget)
         self.label_4.setObjectName("label_4")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_4)
@@ -72,31 +77,72 @@ class Ui_CreateProject(object):
         self.verticalLayout.addWidget(self.widget)
         self.buttonBox = QtWidgets.QDialogButtonBox(CreateProject)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.buttonBox.setStandardButtons(
+            QtWidgets.QDialogButtonBox.Cancel | QtWidgets.QDialogButtonBox.Ok
+        )
         self.buttonBox.setObjectName("buttonBox")
         self.verticalLayout.addWidget(self.buttonBox)
 
         self.retranslateUi(CreateProject)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), CreateProject.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), CreateProject.reject)
+        QtCore.QObject.connect(
+            self.buttonBox, QtCore.SIGNAL("accepted()"), CreateProject.accept
+        )
+        QtCore.QObject.connect(
+            self.buttonBox, QtCore.SIGNAL("rejected()"), CreateProject.reject
+        )
         QtCore.QMetaObject.connectSlotsByName(CreateProject)
 
     def retranslateUi(self, CreateProject):
-        CreateProject.setWindowTitle(QtWidgets.QApplication.translate("CreateProject", "Dialog", None, -1))
-        self.label.setText(QtWidgets.QApplication.translate("CreateProject", "ROM Path", None, -1))
-        self.rom_button.setText(QtWidgets.QApplication.translate("CreateProject", "...", None, -1))
-        self.label_2.setText(QtWidgets.QApplication.translate("CreateProject", "Project Path", None, -1))
-        self.label_3.setText(QtWidgets.QApplication.translate("CreateProject", "Language", None, -1))
-        self.language_box.setItemText(0, QtWidgets.QApplication.translate("CreateProject", "English (NA)", None, -1))
-        self.language_box.setItemText(1, QtWidgets.QApplication.translate("CreateProject", "English (EU)", None, -1))
-        self.language_box.setItemText(2, QtWidgets.QApplication.translate("CreateProject", "Japanese", None, -1))
-        self.language_box.setItemText(3, QtWidgets.QApplication.translate("CreateProject", "Spanish", None, -1))
-        self.language_box.setItemText(4, QtWidgets.QApplication.translate("CreateProject", "French", None, -1))
-        self.language_box.setItemText(5, QtWidgets.QApplication.translate("CreateProject", "German", None, -1))
-        self.language_box.setItemText(6, QtWidgets.QApplication.translate("CreateProject", "Italian", None, -1))
-        self.project_path_button.setText(QtWidgets.QApplication.translate("CreateProject", "...", None, -1))
-        self.label_4.setText(QtWidgets.QApplication.translate("CreateProject", "Game", None, -1))
-        self.game_box.setItemText(0, QtWidgets.QApplication.translate("CreateProject", "FE13", None, -1))
-        self.game_box.setItemText(1, QtWidgets.QApplication.translate("CreateProject", "FE14", None, -1))
-        self.game_box.setItemText(2, QtWidgets.QApplication.translate("CreateProject", "FE15", None, -1))
-
+        CreateProject.setWindowTitle(
+            QtWidgets.QApplication.translate("CreateProject", "Dialog", None, -1)
+        )
+        self.label.setText(
+            QtWidgets.QApplication.translate("CreateProject", "ROM Path", None, -1)
+        )
+        self.rom_button.setText(
+            QtWidgets.QApplication.translate("CreateProject", "...", None, -1)
+        )
+        self.label_2.setText(
+            QtWidgets.QApplication.translate("CreateProject", "Project Path", None, -1)
+        )
+        self.label_3.setText(
+            QtWidgets.QApplication.translate("CreateProject", "Language", None, -1)
+        )
+        self.language_box.setItemText(
+            0,
+            QtWidgets.QApplication.translate("CreateProject", "English (NA)", None, -1),
+        )
+        self.language_box.setItemText(
+            1,
+            QtWidgets.QApplication.translate("CreateProject", "English (EU)", None, -1),
+        )
+        self.language_box.setItemText(
+            2, QtWidgets.QApplication.translate("CreateProject", "Japanese", None, -1)
+        )
+        self.language_box.setItemText(
+            3, QtWidgets.QApplication.translate("CreateProject", "Spanish", None, -1)
+        )
+        self.language_box.setItemText(
+            4, QtWidgets.QApplication.translate("CreateProject", "French", None, -1)
+        )
+        self.language_box.setItemText(
+            5, QtWidgets.QApplication.translate("CreateProject", "German", None, -1)
+        )
+        self.language_box.setItemText(
+            6, QtWidgets.QApplication.translate("CreateProject", "Italian", None, -1)
+        )
+        self.project_path_button.setText(
+            QtWidgets.QApplication.translate("CreateProject", "...", None, -1)
+        )
+        self.label_4.setText(
+            QtWidgets.QApplication.translate("CreateProject", "Game", None, -1)
+        )
+        self.game_box.setItemText(
+            0, QtWidgets.QApplication.translate("CreateProject", "FE13", None, -1)
+        )
+        self.game_box.setItemText(
+            1, QtWidgets.QApplication.translate("CreateProject", "FE14", None, -1)
+        )
+        self.game_box.setItemText(
+            2, QtWidgets.QApplication.translate("CreateProject", "FE15", None, -1)
+        )

@@ -7,15 +7,13 @@ class Texture:
         self._width: int = raw_texture.get_width()
         self._height: int = raw_texture.get_height()
         self._pixel_format: int = raw_texture.get_pixel_format()
-        self._image = self._convert_raw_pixel_data_to_image(raw_texture.get_pixel_data())
+        self._image = self._convert_raw_pixel_data_to_image(
+            raw_texture.get_pixel_data()
+        )
 
     def _convert_raw_pixel_data_to_image(self, pixel_data: bytes) -> Image:
         image = Image.frombytes(
-            "RGBA",
-            (self._width, self._height),
-            pixel_data,
-            "raw",
-            "RGBA"
+            "RGBA", (self._width, self._height), pixel_data, "raw", "RGBA"
         )
         return image
 

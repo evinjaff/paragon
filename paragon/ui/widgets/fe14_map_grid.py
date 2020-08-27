@@ -262,7 +262,10 @@ class FE14MapGrid(QScrollArea):
                 new_cell.set_selected(True)
             self.spawn_location_changed.emit(old_coordinate, coordinate)
         else:
-            spawn[coordinate_key].value = [self._signed_to_unsigned(coordinate[0]), self._signed_to_unsigned(coordinate[1])]
+            spawn[coordinate_key].value = [
+                self._signed_to_unsigned(coordinate[0]),
+                self._signed_to_unsigned(coordinate[1]),
+            ]
 
     @staticmethod
     def _signed_to_unsigned(value):

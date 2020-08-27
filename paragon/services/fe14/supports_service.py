@@ -31,7 +31,7 @@ class Support:
     def export(self):
         return {
             "character": self.character.get_key(),
-            "support_type": self.support_type
+            "support_type": self.support_type,
         }
 
     @staticmethod
@@ -46,7 +46,10 @@ class ExportSupportTableNode:
 
     def children(self):
         supports = self._get_supports(self._character)
-        return [(support, support.character.get_display_name(), support.character.get_key()) for support in supports]
+        return [
+            (support, support.character.get_display_name(), support.character.get_key())
+            for support in supports
+        ]
 
     @staticmethod
     def export_capabilities() -> ExportCapabilities:
@@ -83,7 +86,9 @@ class SupportsService(AbstractEditorService):
     def check_support_id_validity(self):
         module_service = locator.get_scoped("ModuleService")
         characters = module_service.get_module("Characters").entries
-        reader = BinArchiveReader(self.archive, self._get_master_support_table_address())
+        reader = BinArchiveReader(
+            self.archive, self._get_master_support_table_address()
+        )
         table_count = reader.read_u32()
         encountered_ids = set()
         for character in characters:
@@ -210,7 +215,9 @@ class SupportsService(AbstractEditorService):
         writer.write_u16(old_count - 1)
 
         # Deallocate the support.
-        target_index = self._find_index_of_support_with_character(reader, other, old_count)
+        target_index = self._find_index_of_support_with_character(
+            reader, other, old_count
+        )
         target_address = writer.tell() + target_index * 0xC
         self.archive.deallocate(target_address, 0xC, False)
 
@@ -235,7 +242,9 @@ class SupportsService(AbstractEditorService):
             self.set_support_type_from_characters(character, other, new_support_type)
             support.support_type = new_support_type
 
-    def set_support_type_from_characters(self, character1, character2, new_support_type):
+    def set_support_type_from_characters(
+        self, character1, character2, new_support_type
+    ):
         self._set_support_type_helper(character1, character2, new_support_type)
         self._set_support_type_helper(character2, character1, new_support_type)
 
@@ -280,22 +289,35 @@ class SupportsService(AbstractEditorService):
     def children(self):
         module = locator.get_scoped("ModuleService").get_module("Characters")
         characters = module.entries
-        return [(ExportSupportTableNode(character, self.get_supports_for_character),
-                 character.get_display_name(),
-                 character.get_key())
-                for character in characters if self._has_support_table(character)]
+        return [
+            (
+                ExportSupportTableNode(character, self.get_supports_for_character),
+                character.get_display_name(),
+                character.get_key(),
+            )
+            for character in characters
+            if self._has_support_table(character)
+        ]
 
     def import_values_from_json(self, values_json: dict):
-        module: TableModule = locator.get_scoped("ModuleService").get_module("Characters")
+        module: TableModule = locator.get_scoped("ModuleService").get_module(
+            "Characters"
+        )
         for character1_key in values_json:
             character1 = module.get_element_by_key(character1_key)
             for character2_key in values_json[character1_key]:
                 character2 = module.get_element_by_key(character2_key)
-                support_type = values_json[character1_key][character2_key]["support_type"]
+                support_type = values_json[character1_key][character2_key][
+                    "support_type"
+                ]
                 if self._support_exists_between_characters(character1, character2):
-                    self.set_support_type_from_characters(character1, character2, support_type)
+                    self.set_support_type_from_characters(
+                        character1, character2, support_type
+                    )
                 else:
-                    self.add_support_between_characters(character1, character2, support_type)
+                    self.add_support_between_characters(
+                        character1, character2, support_type
+                    )
         self.set_in_use()
 
     def open_support_conversation_for_characters(self, character1, character2):
@@ -309,13 +331,28 @@ class SupportsService(AbstractEditorService):
             if not archive:
                 archive = MessageArchive()
                 archive.title = "MESS_ARCHIVE_%s_%s" % (part1, part2)
-                archive.insert_or_overwrite_message("MID_支援_%s_%s_Ｃ" % (part1, part2), "")
-                archive.insert_or_overwrite_message("MID_支援_%s_%s_Ｂ" % (part1, part2), "")
-                archive.insert_or_overwrite_message("MID_支援_%s_%s_Ａ" % (part1, part2), "")
-                archive.insert_or_overwrite_message("MID_支援_%s_%s_Ｓ" % (part1, part2), "")
-                locator.get_scoped("OpenFilesService").register_or_overwrite_message_archive(path1, archive)
-        editor_title = "Support - %s and %s" % (character1.get_display_name(), character2.get_display_name())
-        editor = FE14ConversationEditor(archive, title=editor_title, owner=self, is_support=True)
+                archive.insert_or_overwrite_message(
+                    "MID_支援_%s_%s_Ｃ" % (part1, part2), ""
+                )
+                archive.insert_or_overwrite_message(
+                    "MID_支援_%s_%s_Ｂ" % (part1, part2), ""
+                )
+                archive.insert_or_overwrite_message(
+                    "MID_支援_%s_%s_Ａ" % (part1, part2), ""
+                )
+                archive.insert_or_overwrite_message(
+                    "MID_支援_%s_%s_Ｓ" % (part1, part2), ""
+                )
+                locator.get_scoped(
+                    "OpenFilesService"
+                ).register_or_overwrite_message_archive(path1, archive)
+        editor_title = "Support - %s and %s" % (
+            character1.get_display_name(),
+            character2.get_display_name(),
+        )
+        editor = FE14ConversationEditor(
+            archive, title=editor_title, owner=self, is_support=True
+        )
         self._conversation_editors.append(editor)
         editor.show()
 

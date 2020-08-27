@@ -51,8 +51,12 @@ class ModuleService:
 
     def load_files_and_generate_model(self):
         successful_modules = self._attach_to_files()
-        self._modules = {module.name: self._modules[module.name] for module in successful_modules}
-        successful_modules.extend({mod for mod in self._common_module_templates.values()})
+        self._modules = {
+            module.name: self._modules[module.name] for module in successful_modules
+        }
+        successful_modules.extend(
+            {mod for mod in self._common_module_templates.values()}
+        )
         modules = sorted(successful_modules, key=lambda mod: mod.name)
         self._module_model = ModuleModel(modules)
 
@@ -62,12 +66,17 @@ class ModuleService:
         for module in self._modules.values():
             if module.file:
                 try:
-                    logging.info("Attaching module %s to archive %s" % (module.name, module.file))
+                    logging.info(
+                        "Attaching module %s to archive %s" % (module.name, module.file)
+                    )
                     archive = open_files_service.open(module.file)
                     module.attach_to(archive)
                     successful_modules.append(module)
                 except:
-                    logging.exception("Failed to attach module %s to file %s" % (module.name, module.file))
+                    logging.exception(
+                        "Failed to attach module %s to file %s"
+                        % (module.name, module.file)
+                    )
                     # open_files_service.close_archive(archive)
                     # TODO: Use reference counting for archives to prevent bugs
                     #       related to close_archive.
@@ -120,6 +129,8 @@ class ModuleService:
     def import_values_from_json(self, values_json: dict):
         for module_name in values_json:
             if module_name not in self._modules:
-                raise KeyError("Cannot import into non-existent module %s." % module_name)
+                raise KeyError(
+                    "Cannot import into non-existent module %s." % module_name
+                )
             self._modules[module_name].import_values_from_dict(values_json[module_name])
             self.set_module_in_use(self._modules[module_name])

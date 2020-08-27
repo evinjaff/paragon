@@ -12,12 +12,14 @@ _EDITOR_LABELS = [
     "Speed",
     "Luck",
     "Defense",
-    "Resistance"
+    "Resistance",
 ]
 
 
 class MergedFlagsEditor(QWidget):
-    def __init__(self, target_properties: List[str], template: PropertyContainer, parent=None):
+    def __init__(
+        self, target_properties: List[str], template: PropertyContainer, parent=None
+    ):
         super().__init__(parent)
         self.target_properties = target_properties
         self.target = None

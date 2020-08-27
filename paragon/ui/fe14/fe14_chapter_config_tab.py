@@ -14,8 +14,12 @@ class FE14ChapterConfigTab(QScrollArea):
         config_module = module_service.get_common_module_template("Map Config")
         self.module = module_service.get_module("Chapters")
         self.text_data_widget = FE14ChapterTextDataWidget()
-        self.header_scroll, self.header_property_form = PropertyForm.create_with_scroll(self.module.element_template)
-        self.config_scroll, self.config_property_form = PropertyForm.create_with_scroll(config_module.element_template)
+        self.header_scroll, self.header_property_form = PropertyForm.create_with_scroll(
+            self.module.element_template
+        )
+        self.config_scroll, self.config_property_form = PropertyForm.create_with_scroll(
+            config_module.element_template
+        )
         self.header_property_form.editors["CID"].setEnabled(False)
         self.header_property_form.editors["Key (CID)"].setEnabled(False)
         self.vertical_layout = QVBoxLayout(parent=self)

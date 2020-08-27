@@ -16,8 +16,12 @@ class CreateProjectDialog(QDialog, Ui_CreateProject):
         self.setWindowTitle("Create Project")
         self.setWindowIcon(QIcon("paragon.ico"))
 
-        self.rom_button.clicked.connect(lambda: self._open_file_and_set_field("rom_field"))
-        self.project_path_button.clicked.connect(lambda: self._open_file_and_set_field("project_path_field"))
+        self.rom_button.clicked.connect(
+            lambda: self._open_file_and_set_field("rom_field")
+        )
+        self.project_path_button.clicked.connect(
+            lambda: self._open_file_and_set_field("project_path_field")
+        )
         self.rom_field.textChanged.connect(self._update_ok_button_enabled)
         self.project_path_field.textChanged.connect(self._update_ok_button_enabled)
 
@@ -47,16 +51,22 @@ class CreateProjectDialog(QDialog, Ui_CreateProject):
             self.project = Project(rom_path, project_path, game, language)
         except NotADirectoryError:
             logging.exception("Error during project creation.")
-            self.message_dialog.showMessage("One of the specified paths is not a directory.", "error")
+            self.message_dialog.showMessage(
+                "One of the specified paths is not a directory.", "error"
+            )
         except IndexError:
             logging.exception("Error during project creation.")
             self.message_dialog.showMessage("Invalid game or language.", "error")
         except NotImplementedError:
             logging.exception("Error during project creation.")
-            self.message_dialog.showMessage("Attempted to create a project for an unsupported game.")
+            self.message_dialog.showMessage(
+                "Attempted to create a project for an unsupported game."
+            )
         except:
             logging.exception("Unknown error during project creation.")
-            self.message_dialog.showMessage("An unknown error occurred during project creation.")
+            self.message_dialog.showMessage(
+                "An unknown error occurred during project creation."
+            )
 
         if self.project:
             super().accept()

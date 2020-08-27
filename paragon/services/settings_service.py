@@ -33,7 +33,7 @@ class SettingsService:
             "cached_project": self._cached_project,
             "theme": self._theme,
             "remember_exports": self._remember_exports,
-            "projects": self._create_projects_entry()
+            "projects": self._create_projects_entry(),
         }
 
         logging.info("Serialized settings. Writing to disk...")
@@ -63,7 +63,9 @@ class SettingsService:
     def has_cached_project(self) -> bool:
         if not self._remember_last_project:
             return False
-        return self._cached_project is not None and self._cached_project in range(0, self._project_model.rowCount())
+        return self._cached_project is not None and self._cached_project in range(
+            0, self._project_model.rowCount()
+        )
 
     def get_theme(self) -> Optional[str]:
         return self._theme

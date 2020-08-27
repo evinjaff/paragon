@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -50,11 +51,15 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
         self.horizontalLayout.addItem(spacerItem)
         self.close_button = QtWidgets.QPushButton(self.widget)
         self.close_button.setEnabled(False)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.close_button.sizePolicy().hasHeightForWidth())
@@ -111,19 +116,53 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "MainWindow", None, -1))
-        self.search_field.setPlaceholderText(QtWidgets.QApplication.translate("MainWindow", "Search...", None, -1))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtWidgets.QApplication.translate("MainWindow", "Modules", None, -1))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QtWidgets.QApplication.translate("MainWindow", "Dedicated Editors", None, -1))
-        self.close_button.setText(QtWidgets.QApplication.translate("MainWindow", "Close", None, -1))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtWidgets.QApplication.translate("MainWindow", "Open Files", None, -1))
-        self.menuFile.setTitle(QtWidgets.QApplication.translate("MainWindow", "File", None, -1))
-        self.menuOptions.setTitle(QtWidgets.QApplication.translate("MainWindow", "Options", None, -1))
-        self.action_save.setText(QtWidgets.QApplication.translate("MainWindow", "Save", None, -1))
-        self.action_close.setText(QtWidgets.QApplication.translate("MainWindow", "Close", None, -1))
-        self.action_quit.setText(QtWidgets.QApplication.translate("MainWindow", "Quit", None, -1))
-        self.action_reload.setText(QtWidgets.QApplication.translate("MainWindow", "Reload", None, -1))
-        self.theme_menu.setText(QtWidgets.QApplication.translate("MainWindow", "Theme", None, -1))
-        self.action_export.setText(QtWidgets.QApplication.translate("MainWindow", "Export", None, -1))
-        self.action_import.setText(QtWidgets.QApplication.translate("MainWindow", "Import", None, -1))
-
+        MainWindow.setWindowTitle(
+            QtWidgets.QApplication.translate("MainWindow", "MainWindow", None, -1)
+        )
+        self.search_field.setPlaceholderText(
+            QtWidgets.QApplication.translate("MainWindow", "Search...", None, -1)
+        )
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tab),
+            QtWidgets.QApplication.translate("MainWindow", "Modules", None, -1),
+        )
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tab_3),
+            QtWidgets.QApplication.translate(
+                "MainWindow", "Dedicated Editors", None, -1
+            ),
+        )
+        self.close_button.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Close", None, -1)
+        )
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tab_2),
+            QtWidgets.QApplication.translate("MainWindow", "Open Files", None, -1),
+        )
+        self.menuFile.setTitle(
+            QtWidgets.QApplication.translate("MainWindow", "File", None, -1)
+        )
+        self.menuOptions.setTitle(
+            QtWidgets.QApplication.translate("MainWindow", "Options", None, -1)
+        )
+        self.action_save.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Save", None, -1)
+        )
+        self.action_close.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Close", None, -1)
+        )
+        self.action_quit.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Quit", None, -1)
+        )
+        self.action_reload.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Reload", None, -1)
+        )
+        self.theme_menu.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Theme", None, -1)
+        )
+        self.action_export.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Export", None, -1)
+        )
+        self.action_import.setText(
+            QtWidgets.QApplication.translate("MainWindow", "Import", None, -1)
+        )

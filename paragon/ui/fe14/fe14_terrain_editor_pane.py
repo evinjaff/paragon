@@ -12,8 +12,12 @@ class FE14TerrainEditorPane(QScrollArea):
         super().__init__(parent)
         terrain = Terrain()
         persistent_properties_template = terrain.adapter()
-        self.persistent_scroll, self.persistent_form = PropertyForm.create_with_scroll(persistent_properties_template)
-        self.tile_scroll, self.tile_form = PropertyForm.create_with_scroll(get_tile_template())
+        self.persistent_scroll, self.persistent_form = PropertyForm.create_with_scroll(
+            persistent_properties_template
+        )
+        self.tile_scroll, self.tile_form = PropertyForm.create_with_scroll(
+            get_tile_template()
+        )
         self.toggle_persistent_button = QPushButton(text="Toggle Map/Grid Properties")
         self.persistent_scroll.setFixedHeight(300)
 
@@ -26,7 +30,9 @@ class FE14TerrainEditorPane(QScrollArea):
         self.setWidgetResizable(True)
         self.setWidget(self.container)
 
-        self.toggle_persistent_button.clicked.connect(self._on_toggle_persistent_button_pressed)
+        self.toggle_persistent_button.clicked.connect(
+            self._on_toggle_persistent_button_pressed
+        )
 
     def _on_toggle_persistent_button_pressed(self):
         self.persistent_scroll.setVisible(not self.persistent_scroll.isVisible())

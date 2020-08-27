@@ -73,7 +73,9 @@ class AIDataService:
         return result
 
     @staticmethod
-    def _read_mapped_pointers(reader: BinArchiveReader, addresses: List[int]) -> List[str]:
+    def _read_mapped_pointers(
+        reader: BinArchiveReader, addresses: List[int]
+    ) -> List[str]:
         result = []
         for address in addresses:
             reader.seek(address)

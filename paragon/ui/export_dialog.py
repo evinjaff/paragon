@@ -4,7 +4,14 @@ import logging
 from PySide2 import QtWidgets, QtGui, QtCore
 from PySide2.QtCore import QModelIndex
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QWidget, QVBoxLayout, QTreeView, QFileDialog, QPushButton, QCheckBox
+from PySide2.QtWidgets import (
+    QWidget,
+    QVBoxLayout,
+    QTreeView,
+    QFileDialog,
+    QPushButton,
+    QCheckBox,
+)
 
 from paragon.model.qt.export_changes_model import ExportChangesModel
 from paragon.services.service_locator import locator
@@ -35,7 +42,9 @@ class ExportDialog(QWidget):
 
         self.main_view.expanded.connect(self._on_item_expanded)
         self.export_button.clicked.connect(self._on_export_triggered)
-        self.remember_selections_checkbox.stateChanged.connect(self._on_remember_selections_state_changed)
+        self.remember_selections_checkbox.stateChanged.connect(
+            self._on_remember_selections_state_changed
+        )
 
         self._set_remember_checkbox_state_from_settings()
 
@@ -55,9 +64,7 @@ class ExportDialog(QWidget):
 
     def _on_export_triggered(self):
         file_name, ok = QFileDialog.getSaveFileName(
-            self,
-            caption="Select Changes File Destination",
-            filter="*.json"
+            self, caption="Select Changes File Destination", filter="*.json"
         )
         if ok:
             self._try_export_and_write(file_name)
@@ -70,7 +77,9 @@ class ExportDialog(QWidget):
                 json.dump(export_data, f, indent=4, ensure_ascii=False)
         except:
             logging.exception("An error occurred while exporting data.")
-            self.error_dialog = ErrorDialog("An error occurred while exporting. See the log for details.")
+            self.error_dialog = ErrorDialog(
+                "An error occurred while exporting. See the log for details."
+            )
             self.error_dialog.show()
 
     def _on_item_expanded(self, index: QModelIndex):

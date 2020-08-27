@@ -13,7 +13,12 @@ class FE14CharacterModuleExtension(AbstractModuleExtension):
     def on_remove(self, module: Module, target_entry: PropertyContainer):
         pass
 
-    def on_copy(self, module: Module, source_entry: PropertyContainer, target_entry: PropertyContainer):
+    def on_copy(
+        self,
+        module: Module,
+        source_entry: PropertyContainer,
+        target_entry: PropertyContainer,
+    ):
         target_entry["Support ID"].value = 0xFFFF
         target_entry["Parent ID"].value = 0xFFFF
         target_entry["Child ID"].value = 0xFFFF

@@ -1,7 +1,20 @@
 from PySide2 import QtCore
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QWidget, QLineEdit, QListView, QVBoxLayout, QGroupBox, QTabWidget, QHBoxLayout, QFrame, \
-    QGraphicsView, QMainWindow, QToolBar, QAction, QScrollArea
+from PySide2.QtWidgets import (
+    QWidget,
+    QLineEdit,
+    QListView,
+    QVBoxLayout,
+    QGroupBox,
+    QTabWidget,
+    QHBoxLayout,
+    QFrame,
+    QGraphicsView,
+    QMainWindow,
+    QToolBar,
+    QAction,
+    QScrollArea,
+)
 
 from paragon.ui.widgets.portrait_viewer import PortraitViewer
 
@@ -80,11 +93,9 @@ class Ui_FE14CharacterEditor(QMainWindow):
         self.action_add = QAction(text="Add")
         self.action_remove = QAction(text="Remove")
         self.action_copy_to = QAction(text="Copy To")
-        self.tool_bar.addActions([
-            self.action_add,
-            self.action_remove,
-            self.action_copy_to
-        ])
+        self.tool_bar.addActions(
+            [self.action_add, self.action_remove, self.action_copy_to]
+        )
 
         self.addToolBar(self.tool_bar)
 

@@ -27,7 +27,7 @@ _EMOTION_VALUES = {
     "キメ": 6,
     "やけくそ": 7,
     "汗": 100,
-    "照": 101
+    "照": 101,
 }
 
 
@@ -43,15 +43,18 @@ class FE14PortraitService:
         self._cached_avatar = None
         self._cached_avatar_is_female = None
 
-    def get_sorted_portraits_for_character(self, character: PropertyContainer, mode: str) \
-            -> Optional[List[Tuple[str, Texture]]]:
+    def get_sorted_portraits_for_character(
+        self, character: PropertyContainer, mode: str
+    ) -> Optional[List[Tuple[str, Texture]]]:
         portraits = self.get_portraits_for_character(character, mode)
         if not portraits:
             return None
         portraits_list = [(k, v) for k, v in portraits.items()]
         return sorted(portraits_list, key=_get_portrait_key_value)
 
-    def get_portraits_for_character(self, character: PropertyContainer, mode: str) -> Optional[Dict[str, Texture]]:
+    def get_portraits_for_character(
+        self, character: PropertyContainer, mode: str
+    ) -> Optional[Dict[str, Texture]]:
         if not character:
             return None
         fid = character[_FID_KEY].value
@@ -62,7 +65,9 @@ class FE14PortraitService:
     def get_portraits_for_jid(self, character: PropertyContainer, mode: str):
         if not character:
             return None
-        class_module: TableModule = locator.get_scoped("ModuleService").get_module("Classes")
+        class_module: TableModule = locator.get_scoped("ModuleService").get_module(
+            "Classes"
+        )
         class_id = character[_CLASS_KEY].value
         job = class_module.entries[class_id]
         jid = job[_JID_KEY].value
@@ -70,7 +75,7 @@ class FE14PortraitService:
             return None
         portraits = self.get_portraits_for_fid("FID_" + jid[4:], mode)
         if not portraits:
-            return self.get_portraits_for_fid("FID_" + jid[4:len(jid) - 1], mode)
+            return self.get_portraits_for_fid("FID_" + jid[4 : len(jid) - 1], mode)
 
     def get_portraits_for_fid(self, fid: str, mode: str):
         entry = self.get_portrait_entry_for_fid(fid, mode)
@@ -80,7 +85,9 @@ class FE14PortraitService:
         return self.get_portraits_from_arc(portrait_file)
 
     @lru_cache(maxsize=32)
-    def get_portraits_from_arc(self, portrait_file_name) -> Optional[Dict[str, Texture]]:
+    def get_portraits_from_arc(
+        self, portrait_file_name
+    ) -> Optional[Dict[str, Texture]]:
         if not portrait_file_name:
             return None
         assets_service = locator.get_scoped("AssetsService")
@@ -88,7 +95,9 @@ class FE14PortraitService:
         pruned_texture_map = self._prune_file_extensions_from_keys(texture_map)
         return pruned_texture_map
 
-    def get_blush_and_sweat_coordinates(self, fid: str, mode: str) -> Optional[List[Tuple[int, int]]]:
+    def get_blush_and_sweat_coordinates(
+        self, fid: str, mode: str
+    ) -> Optional[List[Tuple[int, int]]]:
         entry = self.get_portrait_entry_for_fid(fid, mode)
         if not entry:
             return None
@@ -97,7 +106,7 @@ class FE14PortraitService:
         else:
             return [
                 (entry["Blush Position X"].value, entry["Blush Position Y"].value),
-                (entry["Sweat Position X"].value, entry["Sweat Position Y"].value)
+                (entry["Sweat Position X"].value, entry["Sweat Position Y"].value),
             ]
 
     @staticmethod
@@ -106,7 +115,9 @@ class FE14PortraitService:
             key = _ST_TEMPLATE % fid[4:]
         else:
             key = _BU_TEMPLATE % fid[4:]
-        portraits_module = locator.get_scoped("ModuleService").get_module(_PORTRAIT_MODULE_KEY)
+        portraits_module = locator.get_scoped("ModuleService").get_module(
+            _PORTRAIT_MODULE_KEY
+        )
         return portraits_module.get_element_by_key(key)
 
     def get_avatar_portraits(self, is_female: bool, mode: str = "st"):
@@ -128,7 +139,9 @@ class FE14PortraitService:
                 hair_texture: Texture = hair[hair_texture_key]
                 for portrait in portraits.values():
                     if portrait != "汗" and portrait != "照":
-                        portrait.raw_image().paste(hair_texture.raw_image(), (0, 0), hair_texture.raw_image())
+                        portrait.raw_image().paste(
+                            hair_texture.raw_image(), (0, 0), hair_texture.raw_image()
+                        )
         self._cached_avatar = portraits
         self._cached_avatar_is_female = is_female
         return portraits

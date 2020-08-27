@@ -61,10 +61,7 @@ class MessageProperty(AbstractProperty):
         return MessagePropertyEditor(self.name)
 
     def export(self) -> Any:
-        return {
-            "key": self.key,
-            "value": self.value
-        }
+        return {"key": self.key, "value": self.value}
 
     def import_values(self, values_json: Any):
         self._open_archive()

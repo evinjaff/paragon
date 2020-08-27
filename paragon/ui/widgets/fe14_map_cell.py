@@ -2,7 +2,14 @@ from enum import Enum
 
 from PySide2 import QtGui, QtCore, QtWidgets
 from PySide2.QtCore import Signal, QMimeData
-from PySide2.QtGui import QMouseEvent, QPixmap, QDrag, QDragEnterEvent, QDragMoveEvent, QDropEvent
+from PySide2.QtGui import (
+    QMouseEvent,
+    QPixmap,
+    QDrag,
+    QDragEnterEvent,
+    QDragMoveEvent,
+    QDropEvent,
+)
 from PySide2.QtWidgets import QLabel
 
 from paragon.services.service_locator import locator
@@ -19,7 +26,7 @@ _OCCUPATION_PIXMAPS = {
     MapCellOccupationState.UNOCCUPIED: None,
     MapCellOccupationState.PLAYER: "Assets/player.png",
     MapCellOccupationState.ENEMY: "Assets/enemy.png",
-    MapCellOccupationState.ALLIED: "Assets/allied.png"
+    MapCellOccupationState.ALLIED: "Assets/allied.png",
 }
 
 DEFAULT_BORDER = "1px dashed black"
@@ -93,20 +100,26 @@ class FE14MapCell(QLabel):
         self.setPixmap(pixmap)
 
     def dragEnterEvent(self, event: QDragEnterEvent):
-        if not self.terrain_mode and event.mimeData().hasFormat("application/fe14-spawn"):
+        if not self.terrain_mode and event.mimeData().hasFormat(
+            "application/fe14-spawn"
+        ):
             self.spawn_dragged_over.emit(self.row, self.column)
             event.acceptProposedAction()
         else:
             event.ignore()
 
     def dragMoveEvent(self, event: QDragMoveEvent):
-        if not self.terrain_mode and event.mimeData().hasFormat("application/fe14-spawn"):
+        if not self.terrain_mode and event.mimeData().hasFormat(
+            "application/fe14-spawn"
+        ):
             event.acceptProposedAction()
         else:
             event.ignore()
 
     def dropEvent(self, event: QDropEvent):
-        if not self.terrain_mode and event.mimeData().hasFormat("application/fe14-spawn"):
+        if not self.terrain_mode and event.mimeData().hasFormat(
+            "application/fe14-spawn"
+        ):
             event.acceptProposedAction()
         else:
             event.ignore()

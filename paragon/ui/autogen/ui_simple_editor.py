@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_simple_editor(object):
     def setupUi(self, simple_editor):
         simple_editor.setObjectName("simple_editor")
@@ -20,7 +21,9 @@ class Ui_simple_editor(object):
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
         self.splitter.setObjectName("splitter")
         self.widget_2 = QtWidgets.QWidget(self.splitter)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget_2.sizePolicy().hasHeightForWidth())
@@ -38,7 +41,9 @@ class Ui_simple_editor(object):
         self.search_field.setObjectName("search_field")
         self.horizontalLayout_2.addWidget(self.search_field)
         self.add_button = QtWidgets.QPushButton(self.widget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.add_button.sizePolicy().hasHeightForWidth())
@@ -53,10 +58,14 @@ class Ui_simple_editor(object):
         self.remove_button.setObjectName("remove_button")
         self.horizontalLayout_2.addWidget(self.remove_button)
         self.copy_to_button = QtWidgets.QPushButton(self.widget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.copy_to_button.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.copy_to_button.sizePolicy().hasHeightForWidth()
+        )
         self.copy_to_button.setSizePolicy(sizePolicy)
         self.copy_to_button.setMinimumSize(QtCore.QSize(5, 0))
         self.copy_to_button.setMaximumSize(QtCore.QSize(80, 16777215))
@@ -64,7 +73,9 @@ class Ui_simple_editor(object):
         self.horizontalLayout_2.addWidget(self.copy_to_button)
         self.verticalLayout_2.addWidget(self.widget)
         self.list_view = QtWidgets.QListView(self.widget_2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.list_view.sizePolicy().hasHeightForWidth())
@@ -86,9 +97,18 @@ class Ui_simple_editor(object):
         QtCore.QMetaObject.connectSlotsByName(simple_editor)
 
     def retranslateUi(self, simple_editor):
-        simple_editor.setWindowTitle(QtWidgets.QApplication.translate("simple_editor", "Form", None, -1))
-        self.search_field.setPlaceholderText(QtWidgets.QApplication.translate("simple_editor", "Search...", None, -1))
-        self.add_button.setText(QtWidgets.QApplication.translate("simple_editor", "+", None, -1))
-        self.remove_button.setText(QtWidgets.QApplication.translate("simple_editor", "-", None, -1))
-        self.copy_to_button.setText(QtWidgets.QApplication.translate("simple_editor", "Copy To", None, -1))
-
+        simple_editor.setWindowTitle(
+            QtWidgets.QApplication.translate("simple_editor", "Form", None, -1)
+        )
+        self.search_field.setPlaceholderText(
+            QtWidgets.QApplication.translate("simple_editor", "Search...", None, -1)
+        )
+        self.add_button.setText(
+            QtWidgets.QApplication.translate("simple_editor", "+", None, -1)
+        )
+        self.remove_button.setText(
+            QtWidgets.QApplication.translate("simple_editor", "-", None, -1)
+        )
+        self.copy_to_button.setText(
+            QtWidgets.QApplication.translate("simple_editor", "Copy To", None, -1)
+        )

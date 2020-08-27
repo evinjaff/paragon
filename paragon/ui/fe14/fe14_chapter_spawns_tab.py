@@ -1,8 +1,17 @@
 from PySide2 import QtGui, QtCore
 from PySide2.QtCore import QModelIndex
 from PySide2.QtGui import QKeySequence
-from PySide2.QtWidgets import QWidget, QTreeView, QSplitter, QVBoxLayout, QFormLayout, QLabel, QCheckBox, \
-    QInputDialog, QShortcut
+from PySide2.QtWidgets import (
+    QWidget,
+    QTreeView,
+    QSplitter,
+    QVBoxLayout,
+    QFormLayout,
+    QLabel,
+    QCheckBox,
+    QInputDialog,
+    QShortcut,
+)
 
 from paragon.model import fe14
 from paragon.model.fe14 import dispo
@@ -29,10 +38,18 @@ def _create_terrain_form():
     _create_editor_for_property(terrain.map_model, persistent_form, persistent_editors)
     _create_editor_for_property(terrain.map_size_x, persistent_form, persistent_editors)
     _create_editor_for_property(terrain.map_size_y, persistent_form, persistent_editors)
-    _create_editor_for_property(terrain.border_size_x, persistent_form, persistent_editors)
-    _create_editor_for_property(terrain.border_size_y, persistent_form, persistent_editors)
-    _create_editor_for_property(terrain.trimmed_size_x, persistent_form, persistent_editors)
-    _create_editor_for_property(terrain.trimmed_size_y, persistent_form, persistent_editors)
+    _create_editor_for_property(
+        terrain.border_size_x, persistent_form, persistent_editors
+    )
+    _create_editor_for_property(
+        terrain.border_size_y, persistent_form, persistent_editors
+    )
+    _create_editor_for_property(
+        terrain.trimmed_size_x, persistent_form, persistent_editors
+    )
+    _create_editor_for_property(
+        terrain.trimmed_size_y, persistent_form, persistent_editors
+    )
     tile_scroll, tile_form = PropertyForm.create_with_scroll(fe14.terrain.TILE_TEMPLATE)
     tile_form.editors["ID"].setEnabled(False)
 
@@ -64,11 +81,15 @@ class FE14ChapterSpawnsTab(QWidget):
         self.toggle_editor_type_checkbox = QCheckBox()
         self.toggle_editor_type_checkbox.setText("Spawns/Terrain")
         self.toggle_editor_type_checkbox.setChecked(True)
-        self.toggle_editor_type_checkbox.stateChanged.connect(self._on_mode_change_requested)
+        self.toggle_editor_type_checkbox.stateChanged.connect(
+            self._on_mode_change_requested
+        )
         self.toggle_coordinate_type_checkbox = QCheckBox()
         self.toggle_coordinate_type_checkbox.setText("Coordinate (1)/Coordinate (2)")
         self.toggle_coordinate_type_checkbox.setChecked(True)
-        self.toggle_coordinate_type_checkbox.stateChanged.connect(self._on_coordinate_change_requested)
+        self.toggle_coordinate_type_checkbox.stateChanged.connect(
+            self._on_coordinate_change_requested
+        )
         self.tree_view = QTreeView()
         left_panel_layout.addWidget(self.toggle_editor_type_checkbox)
         left_panel_layout.addWidget(self.toggle_coordinate_type_checkbox)
@@ -76,8 +97,14 @@ class FE14ChapterSpawnsTab(QWidget):
         left_panel_container.setLayout(left_panel_layout)
 
         self.grid = FE14MapGrid()
-        self.dispos_scroll, self.dispos_form = PropertyForm.create_with_scroll(dispo.SPAWN_TEMPLATE)
-        self.terrain_form, self.terrain_persistent_editors, self.tile_form = _create_terrain_form()
+        self.dispos_scroll, self.dispos_form = PropertyForm.create_with_scroll(
+            dispo.SPAWN_TEMPLATE
+        )
+        (
+            self.terrain_form,
+            self.terrain_persistent_editors,
+            self.tile_form,
+        ) = _create_terrain_form()
 
         self.organizer = QSplitter()
         self.organizer.addWidget(left_panel_container)
@@ -94,10 +121,18 @@ class FE14ChapterSpawnsTab(QWidget):
         self.grid.focused_spawn_changed.connect(self._on_focused_spawn_changed)
         self.add_faction_shortcut.activated.connect(self._on_add_faction_requested)
         self.add_item_shortcut.activated.connect(self._on_add_item_requested)
-        self.dispos_form.editors["PID"].editingFinished.connect(self._on_pid_field_changed)
-        self.dispos_form.editors["Team"].currentIndexChanged.connect(self._on_team_field_changed)
-        self.dispos_form.editors["Coordinate (1)"].textChanged.connect(self._on_coordinate_1_field_changed)
-        self.dispos_form.editors["Coordinate (2)"].textChanged.connect(self._on_coordinate_2_field_changed)
+        self.dispos_form.editors["PID"].editingFinished.connect(
+            self._on_pid_field_changed
+        )
+        self.dispos_form.editors["Team"].currentIndexChanged.connect(
+            self._on_team_field_changed
+        )
+        self.dispos_form.editors["Coordinate (1)"].textChanged.connect(
+            self._on_coordinate_1_field_changed
+        )
+        self.dispos_form.editors["Coordinate (2)"].textChanged.connect(
+            self._on_coordinate_2_field_changed
+        )
 
     def update_chapter_data(self, chapter_data):
         self.chapter_data = chapter_data
@@ -111,7 +146,9 @@ class FE14ChapterSpawnsTab(QWidget):
                 self.tree_view.setModel(self.tiles_model)
             else:
                 self.tree_view.setModel(self.dispos_model)
-            self.tree_view.selectionModel().currentChanged.connect(self._on_tree_selection_changed)
+            self.tree_view.selectionModel().currentChanged.connect(
+                self._on_tree_selection_changed
+            )
             self.grid.set_chapter_data(chapter_data)
             self._update_forms(self.terrain, None, None)
         else:
@@ -138,7 +175,9 @@ class FE14ChapterSpawnsTab(QWidget):
             self.grid.transition_to_terrain_mode()
             self.organizer.addWidget(self.terrain_form)
             self.tree_view.setModel(self.tiles_model)
-        self.tree_view.selectionModel().currentChanged.connect(self._on_tree_selection_changed)
+        self.tree_view.selectionModel().currentChanged.connect(
+            self._on_tree_selection_changed
+        )
 
     def _on_coordinate_change_requested(self, _state):
         self.grid.toggle_coordinate_key()
@@ -157,12 +196,16 @@ class FE14ChapterSpawnsTab(QWidget):
 
     def _on_add_faction_requested(self):
         if self.dispos_model:
-            (faction_name, ok) = QInputDialog.getText(self, "Enter a faction name.", "Name:")
+            (faction_name, ok) = QInputDialog.getText(
+                self, "Enter a faction name.", "Name:"
+            )
             if ok:
                 self.dispos_model.add_faction(faction_name)
 
     def _on_add_item_requested(self):
-        if not self.chapter_data or (not self.terrain_mode and not self.selected_faction):
+        if not self.chapter_data or (
+            not self.terrain_mode and not self.selected_faction
+        ):
             return
         if self.terrain_mode:
             self.tiles_model.add_tile()
@@ -172,11 +215,15 @@ class FE14ChapterSpawnsTab(QWidget):
             self.grid.add_spawn_to_map(spawn)
 
     def _on_coordinate_1_field_changed(self, _text):
-        new_position = self._parse_coordinate_field(self.dispos_form.editors["Coordinate (1)"])
+        new_position = self._parse_coordinate_field(
+            self.dispos_form.editors["Coordinate (1)"]
+        )
         self.grid.update_focused_spawn_position(new_position, "Coordinate (1)")
 
     def _on_coordinate_2_field_changed(self, _text):
-        new_position = self._parse_coordinate_field(self.dispos_form.editors["Coordinate (2)"])
+        new_position = self._parse_coordinate_field(
+            self.dispos_form.editors["Coordinate (2)"]
+        )
         self.grid.update_focused_spawn_position(new_position, "Coordinate (2)")
 
     @staticmethod

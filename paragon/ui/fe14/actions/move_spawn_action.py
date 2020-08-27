@@ -10,9 +10,14 @@ class MoveSpawnAction:
         self.coordinate_key = coordinate_key
 
     def __repr__(self):
-        return "<MoveSpawnAction %s, %s, [%d, %d], [%d, %d]>" \
-            % (self.spawn.get_display_name(), self.coordinate_key, self.old_position[0],
-               self.old_position[1], self.new_position[0], self.new_position[1])
+        return "<MoveSpawnAction %s, %s, [%d, %d], [%d, %d]>" % (
+            self.spawn.get_display_name(),
+            self.coordinate_key,
+            self.old_position[0],
+            self.old_position[1],
+            self.new_position[0],
+            self.new_position[1],
+        )
 
     def undo(self):
         self._move_unit(self.old_position, True)
@@ -28,6 +33,10 @@ class MoveSpawnAction:
         grid.update_focused_spawn_position(position, self.coordinate_key)
 
         prefix = "Undo" if is_undo else "Redo"
-        message = "%s: Update position of %s to (%d, %d)" \
-                  % (prefix, self.spawn.get_display_name(), position[0], position[1])
+        message = "%s: Update position of %s to (%d, %d)" % (
+            prefix,
+            self.spawn.get_display_name(),
+            position[0],
+            position[1],
+        )
         self.controller.view.status_bar.showMessage(message, 5000)

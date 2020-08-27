@@ -42,9 +42,13 @@ class RelevantSpriteData:
 
 
 class FE14SpriteService:
-    def get_sprite_for_character(self, character: PropertyContainer, team: int) -> Optional[QPixmap]:
+    def get_sprite_for_character(
+        self, character: PropertyContainer, team: int
+    ) -> Optional[QPixmap]:
         assets_service = locator.get_scoped("AssetsService")
-        class_module: TableModule = locator.get_scoped("ModuleService").get_module("Classes")
+        class_module: TableModule = locator.get_scoped("ModuleService").get_module(
+            "Classes"
+        )
         sprite_file_name = get_sprite_file_name_from_team(team)
         class_id = character[_CLASS_KEY].value
         job = class_module.entries[class_id]
@@ -63,18 +67,26 @@ class FE14SpriteService:
         if head_dir_path + body_dir_path in _CACHE:
             return _CACHE[head_dir_path + body_dir_path].toqpixmap()
 
-        unique_texture: Optional[Dict[str, Texture]] = assets_service.load_bch(unique_path)
+        unique_texture: Optional[Dict[str, Texture]] = assets_service.load_bch(
+            unique_path
+        )
         if unique_texture:
             unique_texture_key = next(iter(unique_texture), None)
             if unique_texture_key:
-                result = self._assemble_unique_sprite(unique_texture[unique_texture_key])
+                result = self._assemble_unique_sprite(
+                    unique_texture[unique_texture_key]
+                )
                 if result:
                     _CACHE[unique_path] = result
                 return result.toqpixmap()
-        head_texture: Optional[Dict[str, Texture]] = assets_service.load_bch(head_dir_path)
+        head_texture: Optional[Dict[str, Texture]] = assets_service.load_bch(
+            head_dir_path
+        )
         if not head_texture:
             return None
-        body_texture: Optional[Dict[str, Texture]] = assets_service.load_bch(body_dir_path)
+        body_texture: Optional[Dict[str, Texture]] = assets_service.load_bch(
+            body_dir_path
+        )
         if not body_texture:
             return None
 
@@ -85,7 +97,7 @@ class FE14SpriteService:
             result = self._assemble_sprite(
                 head_texture[head_texture_key],
                 body_texture[body_texture_key],
-                relevant_sprite_data
+                relevant_sprite_data,
             )
             if result:
                 _CACHE[unique_path] = result
@@ -99,13 +111,17 @@ class FE14SpriteService:
             raw_texture = texture.raw_image()
             cropped_texture = raw_texture.crop(box=(0, 32, 32, 64)).rotate(90)
             removed_transparency = fefeditor2.increase_alpha(cropped_texture.tobytes())
-            return Image.frombytes("RGBA", (32, 32), removed_transparency, "raw", "RGBA")
+            return Image.frombytes(
+                "RGBA", (32, 32), removed_transparency, "raw", "RGBA"
+            )
         except:
             logging.exception("Failed to assemble unique sprite.")
             return None
 
     @staticmethod
-    def _assemble_sprite(head_texture: Texture, body_texture: Texture, sprite_data: RelevantSpriteData):
+    def _assemble_sprite(
+        head_texture: Texture, body_texture: Texture, sprite_data: RelevantSpriteData
+    ):
         try:
             raw_head_texture = head_texture.raw_image()
             raw_body_texture = body_texture.raw_image()
@@ -113,10 +129,11 @@ class FE14SpriteService:
             cropped_body_texture = raw_body_texture.crop(box=(0, 32, 32, 64)).rotate(90)
             cropped_head_texture = raw_head_texture.crop(box=head_box).rotate(90)
             full_head_texture = Image.new("RGBA", (32, 32), (0, 0, 0, 0))
-            full_head_texture.paste(cropped_head_texture, (sprite_data.head_x, sprite_data.head_y))
+            full_head_texture.paste(
+                cropped_head_texture, (sprite_data.head_x, sprite_data.head_y)
+            )
             merged_pixel_data = fefeditor2.merge_images_and_increase_alpha(
-                full_head_texture.tobytes(),
-                cropped_body_texture.tobytes()
+                full_head_texture.tobytes(), cropped_body_texture.tobytes()
             )
             return Image.frombytes("RGBA", (32, 32), merged_pixel_data, "raw", "RGBA")
         except:
@@ -126,7 +143,9 @@ class FE14SpriteService:
     @staticmethod
     def _load_sprite_data_from_anime(anime_path) -> RelevantSpriteData:
         common_module_service = locator.get_scoped("CommonModuleService")
-        template = locator.get_scoped("ModuleService").get_common_module_template("Sprite Bin Data")
+        template = locator.get_scoped("ModuleService").get_common_module_template(
+            "Sprite Bin Data"
+        )
         module = common_module_service.open_common_module(template, anime_path)
         entry = module.entries[0]
         return RelevantSpriteData(entry)

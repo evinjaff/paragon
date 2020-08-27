@@ -3,7 +3,9 @@ from typing import Optional, Any
 from PySide2.QtWidgets import QWidget
 
 from paragon.services.service_locator import locator
-from paragon.ui.widgets.self_reference_pointer_property_editor import SelfReferencePointerPropertyEditor
+from paragon.ui.widgets.self_reference_pointer_property_editor import (
+    SelfReferencePointerPropertyEditor,
+)
 from .abstract_property import AbstractProperty
 
 

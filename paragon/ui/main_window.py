@@ -3,7 +3,14 @@ from typing import cast
 
 from PySide2 import QtCore, QtWidgets, QtGui
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QMainWindow, QFileDialog, QStyleFactory, QActionGroup, QAction, QMessageBox
+from PySide2.QtWidgets import (
+    QMainWindow,
+    QFileDialog,
+    QStyleFactory,
+    QActionGroup,
+    QAction,
+    QMessageBox,
+)
 
 from paragon.model.qt.module_filter_model import ModuleFilterModel
 from paragon.model.qt.open_files_model import OpenFilesModel
@@ -42,21 +49,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.export_dialog.show()
 
     def _on_import_triggered(self):
-        file_name, ok = QFileDialog.getOpenFileName(self, "Select file.", filter="*.json")
+        file_name, ok = QFileDialog.getOpenFileName(
+            self, "Select file.", filter="*.json"
+        )
         if ok:
             try:
                 locator.get_scoped("Driver").import_from_json(file_name)
                 self.statusbar.showMessage("Import succeeded!", 5000)
             except:
                 logging.exception("An error occurred during importing.")
-                self.error_dialog = ErrorDialog("Importing failed. See the log for details.")
+                self.error_dialog = ErrorDialog(
+                    "Importing failed. See the log for details."
+                )
                 self.error_dialog.show()
                 self.statusbar.showMessage("Importing failed.", 5000)
 
     @staticmethod
     def _create_theme_info_dialog():
         theme_info_dialog = QMessageBox()
-        theme_info_dialog.setText("This theme will be used the next time you run Paragon.")
+        theme_info_dialog.setText(
+            "This theme will be used the next time you run Paragon."
+        )
         theme_info_dialog.setWindowTitle("Paragon")
         theme_info_dialog.setWindowIcon(QIcon("paragon.ico"))
         return theme_info_dialog
@@ -74,7 +87,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if theme == current_theme:
                 action.setChecked(True)
             action.setActionGroup(self.theme_action_group)
-            action.changed.connect(lambda a=action, t=theme: self._on_theme_changed(a, t))
+            action.changed.connect(
+                lambda a=action, t=theme: self._on_theme_changed(a, t)
+            )
 
     def _set_view_models(self):
         module_service = locator.get_scoped("ModuleService")
@@ -84,16 +99,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.proxy_model.setSourceModel(module_service.get_module_model())
         self.module_list_view.setModel(self.proxy_model)
-        self.editors_list_view.setModel(dedicated_editors_service.get_dedicated_editors_model())
+        self.editors_list_view.setModel(
+            dedicated_editors_service.get_dedicated_editors_model()
+        )
         self.file_list_view.setModel(self.open_file_model)
         self.module_list_view.setHeaderHidden(True)
-        self.module_list_view.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.module_list_view.setEditTriggers(
+            QtWidgets.QAbstractItemView.NoEditTriggers
+        )
 
     def _install_signal_handlers(self):
         self.search_field.textChanged.connect(self._update_filter)
         self.module_list_view.activated.connect(self._on_module_activated)
         self.editors_list_view.activated.connect(self._on_editor_activated)
-        self.file_list_view.selectionModel().currentRowChanged.connect(self._on_file_list_selection_change)
+        self.file_list_view.selectionModel().currentRowChanged.connect(
+            self._on_file_list_selection_change
+        )
         self.close_button.clicked.connect(self._on_close_file_pressed)
         self.action_save.triggered.connect(self.save)
         self.action_reload.triggered.connect(self.reload_project)
@@ -146,7 +167,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self._open_module_editor(module)
             except:
                 logging.exception("Failed to open editor for module %s" % module.name)
-                self.error_dialog = ErrorDialog("Unable to open module %s. See the log for details." % module.name)
+                self.error_dialog = ErrorDialog(
+                    "Unable to open module %s. See the log for details." % module.name
+                )
                 self.error_dialog.show()
 
     def _open_module_editor(self, module: Module):

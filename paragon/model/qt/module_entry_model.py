@@ -22,7 +22,9 @@ class ModuleEntryModel(QAbstractListModel):
         if role == QtCore.Qt.DisplayRole:
             return self.module.get_display_name_for_entry(elem)
         if role == QtCore.Qt.DecorationRole and self.module.entry_icon_type:
-            return locator.get_scoped("IconService").get_icon_by_type(elem, self.module.entry_icon_type)
+            return locator.get_scoped("IconService").get_icon_by_type(
+                elem, self.module.entry_icon_type
+            )
         if role == QtCore.Qt.UserRole:
             return elem
         return None
@@ -35,7 +37,9 @@ class ModuleEntryModel(QAbstractListModel):
         return True
 
     def removeRows(self, row: int, count: int, parent: QModelIndex = ...) -> bool:
-        if row not in range(0, len(self.entries)) or row + count not in range(0, len(self.entries) + 1):
+        if row not in range(0, len(self.entries)) or row + count not in range(
+            0, len(self.entries) + 1
+        ):
             return False
 
         self.beginRemoveRows(parent, row, row + count)

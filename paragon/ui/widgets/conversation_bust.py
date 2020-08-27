@@ -42,7 +42,9 @@ class ConversationBust(QGraphicsItemGroup):
         conversation_service = locator.get_scoped("ConversationService")
         portraits = conversation_service.get_portraits_for_fid(fid)
         self._portrait_textures = portraits
-        blush_and_sweat_coordinates = conversation_service.get_blush_and_sweat_coordinates(fid, "st")
+        blush_and_sweat_coordinates = (
+            conversation_service.get_blush_and_sweat_coordinates(fid, "st")
+        )
         if blush_and_sweat_coordinates:
             (self._blush_x, self._blush_y) = blush_and_sweat_coordinates[0]
             (self._sweat_x, self._sweat_y) = blush_and_sweat_coordinates[1]
@@ -82,9 +84,13 @@ class ConversationBust(QGraphicsItemGroup):
             return QPixmap()
         image: Image.Image = self._portrait_image.copy()
         if self._blush_image:
-            image.paste(self._blush_image, (self._blush_x, self._blush_y), self._blush_image)
+            image.paste(
+                self._blush_image, (self._blush_x, self._blush_y), self._blush_image
+            )
         if self._sweat_image:
-            image.paste(self._sweat_image, (self._sweat_x, self._sweat_y), self._sweat_image)
+            image.paste(
+                self._sweat_image, (self._sweat_x, self._sweat_y), self._sweat_image
+            )
         if faded:
             image = locator.get_scoped("ConversationService").fade_image(image)
         if self._is_left:

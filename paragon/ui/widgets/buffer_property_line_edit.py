@@ -39,5 +39,5 @@ class BufferPropertyLineEdit(QLineEdit, PropertyWidget):
         for i in range(0, len(value)):
             result += "%02x" % value[i]
             if i != len(value) - 1:
-                result += ' '
+                result += " "
         return result

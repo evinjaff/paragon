@@ -54,7 +54,9 @@ class DialogueService(AbstractEditorService):
         if not self.loaded:
             open_files_service = locator.get_scoped("OpenFilesService")
             for dialogue in self.dialogues:
-                archive = open_files_service.open_message_archive(dialogue.path, dialogue.localized)
+                archive = open_files_service.open_message_archive(
+                    dialogue.path, dialogue.localized
+                )
                 self.archives[dialogue] = archive
             self.loaded = True
 
@@ -79,7 +81,9 @@ class DialogueService(AbstractEditorService):
         with open("Modules/ServiceData/FE14Dialogue.json", "r", encoding="utf-8") as f:
             js = json.load(f)
             for elem in js:
-                dialogue = Dialogue(elem["name"], elem["path"], elem["key"], elem.get("localized", True))
+                dialogue = Dialogue(
+                    elem["name"], elem["path"], elem["key"], elem.get("localized", True)
+                )
                 elements.append(dialogue)
         return elements
 
@@ -105,17 +109,23 @@ class DialogueService(AbstractEditorService):
         lines = []
         for dialogue in self.dialogues:
             dialogue_value = self.get_dialogue_value_for_character(character, dialogue)
-            lines.append((ExportDialogueLineNode(dialogue_value), dialogue.name, dialogue.key))
+            lines.append(
+                (ExportDialogueLineNode(dialogue_value), dialogue.name, dialogue.key)
+            )
         return ExportDialogueCharacterNode(lines)
 
     def import_values_from_json(self, values_json: dict):
         self.load()
         key_to_dialogue_map = self._get_key_to_dialogue_map()
-        module: TableModule = locator.get_scoped("ModuleService").get_module("Characters")
+        module: TableModule = locator.get_scoped("ModuleService").get_module(
+            "Characters"
+        )
         for key in values_json:
             character = module.get_element_by_key(key)
             if not character:
-                raise KeyError("Cannot import dialogue for non-existent character %s." % key)
+                raise KeyError(
+                    "Cannot import dialogue for non-existent character %s." % key
+                )
             for dialogue_key in values_json[key]:
                 dialogue = key_to_dialogue_map[dialogue_key]
                 new_value = values_json[key][dialogue_key]

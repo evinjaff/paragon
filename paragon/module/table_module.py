@@ -93,7 +93,9 @@ class TableModule(Module):
                 new_elem[self.id_property].value = prev[self.id_property].value + 1
 
     def remove_range(self, begin: int, end: int):
-        logging.info(self.name + " removing range [" + str(begin) + ", " + str(end) + ")")
+        logging.info(
+            self.name + " removing range [" + str(begin) + ", " + str(end) + ")"
+        )
 
         # Deallocate removed elements from the archive.
         base_location = self.location_strategy.read_base_address(self.archive)
@@ -123,7 +125,9 @@ class TableModule(Module):
     def index_of(self, target: PropertyContainer):
         return self.entries.index(target)
 
-    def get_element_by_property_and_value(self, property_name, target_value) -> Optional[PropertyContainer]:
+    def get_element_by_property_and_value(
+        self, property_name, target_value
+    ) -> Optional[PropertyContainer]:
         for entry in self.entries:
             if entry[property_name].value == target_value:
                 return entry
@@ -131,7 +135,9 @@ class TableModule(Module):
 
     def get_element_by_key(self, key) -> Optional[PropertyContainer]:
         if self.element_template.has_key_property():
-            return self.get_element_by_property_and_value(self.element_template.key_property_name, key)
+            return self.get_element_by_property_and_value(
+                self.element_template.key_property_name, key
+            )
         else:
             if not isinstance(key, int):
                 key = int(key)
@@ -148,7 +154,9 @@ class TableModule(Module):
         self.entries_model = ModuleEntryModel(self)
 
     def children(self) -> List[Tuple[PropertyContainer, str, str]]:
-        return [(entry, entry.get_display_name(), entry.get_key()) for entry in self.entries]
+        return [
+            (entry, entry.get_display_name(), entry.get_key()) for entry in self.entries
+        ]
 
     def import_values_from_dict(self, values: dict):
         if self.element_template.has_key_property():
@@ -164,7 +172,10 @@ class TableModule(Module):
             else:
                 index = int(key)
                 if index >= len(self.entries):
-                    raise IndexError("Cannot import into out of bounds index %d for module %s." % (index, self.name))
+                    raise IndexError(
+                        "Cannot import into out of bounds index %d for module %s."
+                        % (index, self.name)
+                    )
                 entry = self.entries[index]
             entry.import_values(values[key])
 
@@ -176,7 +187,9 @@ class TableModule(Module):
                     self.add_elem()
                     entry = self.entries[-1]
                 else:
-                    raise KeyError("Cannot import into non-existent module entry %s." % key)
+                    raise KeyError(
+                        "Cannot import into non-existent module entry %s." % key
+                    )
             entry.import_values(values[key])
 
     @staticmethod

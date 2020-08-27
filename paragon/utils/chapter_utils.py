@@ -16,7 +16,7 @@ _SUFFIXES = {
     ChapterFileLocation.BIRTHRIGHT: "/A/",
     ChapterFileLocation.CONQUEST: "/B/",
     ChapterFileLocation.REVELATION: "/C/",
-    ChapterFileLocation.NO_ROUTE: None
+    ChapterFileLocation.NO_ROUTE: None,
 }
 
 

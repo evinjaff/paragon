@@ -10,6 +10,7 @@
 
 from PySide2 import QtCore, QtGui, QtWidgets
 
+
 class Ui_sound_editor(object):
     def setupUi(self, indirect_sound_editor):
         indirect_sound_editor.setObjectName("sound_editor")
@@ -17,7 +18,9 @@ class Ui_sound_editor(object):
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout(indirect_sound_editor)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.widget = QtWidgets.QWidget(indirect_sound_editor)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
@@ -39,7 +42,9 @@ class Ui_sound_editor(object):
         self.line.setObjectName("line")
         self.horizontalLayout_3.addWidget(self.line)
         self.widget_2 = QtWidgets.QWidget(indirect_sound_editor)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget_2.sizePolicy().hasHeightForWidth())
@@ -57,6 +62,11 @@ class Ui_sound_editor(object):
         QtCore.QMetaObject.connectSlotsByName(indirect_sound_editor)
 
     def retranslateUi(self, indirect_sound_editor):
-        indirect_sound_editor.setWindowTitle(QtWidgets.QApplication.translate("indirect_sound_editor", "Form", None, -1))
-        self.search_bar.setPlaceholderText(QtWidgets.QApplication.translate("indirect_sound_editor", "Search...", None, -1))
-
+        indirect_sound_editor.setWindowTitle(
+            QtWidgets.QApplication.translate("indirect_sound_editor", "Form", None, -1)
+        )
+        self.search_bar.setPlaceholderText(
+            QtWidgets.QApplication.translate(
+                "indirect_sound_editor", "Search...", None, -1
+            )
+        )

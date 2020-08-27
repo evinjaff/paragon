@@ -17,7 +17,11 @@ class FE14ChapterTextDataWidget(QScrollArea):
             label = QLabel(dialogue.name)
             editor = QLineEdit()
             index = len(self.message_data_editors)
-            editor.editingFinished.connect(lambda i=index, e=editor: self._on_dialogue_editor_text_changed(i, e.text()))
+            editor.editingFinished.connect(
+                lambda i=index, e=editor: self._on_dialogue_editor_text_changed(
+                    i, e.text()
+                )
+            )
             self.message_data_editors.append(editor)
             self.message_data_form.addRow(label, editor)
 

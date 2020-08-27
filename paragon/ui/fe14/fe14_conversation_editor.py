@@ -7,7 +7,11 @@ from PySide2.QtGui import QSyntaxHighlighter, QTextCharFormat, QIcon, QTextCurso
 from PySide2.QtWidgets import QAction, QInputDialog, QMessageBox
 
 from paragon.core.conversation import convert
-from paragon.core.conversation.convert import paragon_to_commands, paragon_to_game, commands_to_game
+from paragon.core.conversation.convert import (
+    paragon_to_commands,
+    paragon_to_game,
+    commands_to_game,
+)
 from paragon.model.conversation.transpiler_error import TranspilerError
 from paragon.model.message_archive import MessageArchive
 from paragon.model.qt.messages_model import MessagesModel
@@ -27,15 +31,25 @@ class ParagonScriptHighlighter(QSyntaxHighlighter):
         self.error_format.setBackground(QtCore.Qt.red)
 
     def highlightBlock(self, text: str):
-        if text.startswith("$") and not text.startswith("$G") and not text.startswith("$Nu"):
+        if (
+            text.startswith("$")
+            and not text.startswith("$G")
+            and not text.startswith("$Nu")
+        ):
             self.setFormat(0, len(text), self.command_format)
         if self.currentBlock().blockNumber() == self.error_line:
             self.setFormat(0, len(text), self.error_format)
 
 
 class FE14ConversationEditor(Ui_FE14ConversationEditor):
-    def __init__(self, archive: MessageArchive = None, title="Conversation Editor",
-                 owner=None, parent=None, is_support=False):
+    def __init__(
+        self,
+        archive: MessageArchive = None,
+        title="Conversation Editor",
+        owner=None,
+        parent=None,
+        is_support=False,
+    ):
         super().__init__(parent)
         self.setWindowTitle(title)
         self.setWindowIcon(QIcon("paragon.ico"))
@@ -61,7 +75,9 @@ class FE14ConversationEditor(Ui_FE14ConversationEditor):
         if is_support:
             self.tool_bar.addAction(self.add_s_support_action)
         else:
-            self.tool_bar.addActions([self.add_action, self.remove_action, self.rename_action])
+            self.tool_bar.addActions(
+                [self.add_action, self.remove_action, self.rename_action]
+            )
 
         self.set_archive(archive)
 
@@ -69,7 +85,9 @@ class FE14ConversationEditor(Ui_FE14ConversationEditor):
         self.avatar_name_editor.setText(conversation_service.get_avatar_name())
         self.avatar_is_female_check.setChecked(conversation_service.avatar_is_female())
 
-        self.conversation_list.selectionModel().currentRowChanged.connect(self._update_selection)
+        self.conversation_list.selectionModel().currentRowChanged.connect(
+            self._update_selection
+        )
         self.save_button.clicked.connect(self._on_save_pressed)
         self.preview_button.clicked.connect(self._on_preview_pressed)
         self.avatar_name_editor.editingFinished.connect(self._on_avatar_name_changed)
@@ -93,7 +111,9 @@ class FE14ConversationEditor(Ui_FE14ConversationEditor):
             self.setEnabled(False)
             self.model = None
         self.conversation_list.setModel(self.model)
-        self.conversation_list.selectionModel().currentRowChanged.connect(self._update_selection)
+        self.conversation_list.selectionModel().currentRowChanged.connect(
+            self._update_selection
+        )
 
     def clear(self):
         self.player.clear()
@@ -178,7 +198,9 @@ class FE14ConversationEditor(Ui_FE14ConversationEditor):
 
     def _on_avatar_gender_changed(self, _):
         conversation_service = locator.get_scoped("ConversationService")
-        conversation_service.set_avatar_is_female(self.avatar_is_female_check.isChecked())
+        conversation_service.set_avatar_is_female(
+            self.avatar_is_female_check.isChecked()
+        )
 
     def _on_add_s_support_activated(self):
         if not self.archive or not self.model:
@@ -194,7 +216,9 @@ class FE14ConversationEditor(Ui_FE14ConversationEditor):
         if not self.archive or not self.model:
             return
 
-        (desired_key, ok) = QInputDialog.getText(self, "Enter a key for the message.", "Key")
+        (desired_key, ok) = QInputDialog.getText(
+            self, "Enter a key for the message.", "Key"
+        )
         if not ok:
             return
         if self.archive.has_message(desired_key):

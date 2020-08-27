@@ -63,7 +63,10 @@ class StateMachine:
         else:
             target_state = self.states[new_state_name]
         if self.current_state:
-            target_transition_name = "(%s, %s)" % (self.current_state.get_name(), target_state.get_name())
+            target_transition_name = "(%s, %s)" % (
+                self.current_state.get_name(),
+                target_state.get_name(),
+            )
             if target_transition_name in self.transitions:
                 target_transition = self.transitions[target_transition_name]
                 target_transition.apply(self.current_state, target_state)

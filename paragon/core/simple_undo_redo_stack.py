@@ -20,7 +20,7 @@ class SimpleUndoRedoStack(QObject):
         if self._disable_push:
             return
         if self._next != -1 and self._next < len(self._actions) - 1:
-            del self._actions[self._next + 1:]
+            del self._actions[self._next + 1 :]
         self._actions.append(action)
         self._next += 1
         self.stack_state_changed.emit()

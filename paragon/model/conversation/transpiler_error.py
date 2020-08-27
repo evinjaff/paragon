@@ -9,4 +9,7 @@ class TranspilerError(Exception):
 
     def __str__(self):
         return "Error near line %d, index %d: %s" % (
-            self.source_position.line_number, self.source_position.character, self.error_message)
+            self.source_position.line_number,
+            self.source_position.character,
+            self.error_message,
+        )

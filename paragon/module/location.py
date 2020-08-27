@@ -45,7 +45,7 @@ class VeryDynamicLocationStrategy(LocationStrategy):
     def read_base_address(self, archive) -> int:
         ptr = self.offsets[0]
         for off in self.offsets[1:]:
-            reader = BinArchiveReader(archive, ptr);
+            reader = BinArchiveReader(archive, ptr)
             ptr = reader.read_internal_pointer() + off
         return ptr
 

@@ -5,7 +5,7 @@ from paragon.ui.property_form import PropertyForm
 from paragon.ui.widgets.property_widget import PropertyWidget
 
 
-class PointerPropertyEditor (QGroupBox, PropertyWidget):
+class PointerPropertyEditor(QGroupBox, PropertyWidget):
     def __init__(self, target_property_name, template):
         QGroupBox.__init__(self)
         PropertyWidget.__init__(self, target_property_name)
@@ -13,14 +13,20 @@ class PointerPropertyEditor (QGroupBox, PropertyWidget):
         main_layout = QVBoxLayout(self)
         button_layout = QHBoxLayout()
         self.make_unique_button = QPushButton("Make Unique")
-        self.make_unique_button.setSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
-                                              QtWidgets.QSizePolicy.MinimumExpanding)
+        self.make_unique_button.setSizePolicy(
+            QtWidgets.QSizePolicy.MinimumExpanding,
+            QtWidgets.QSizePolicy.MinimumExpanding,
+        )
         self.clear_button = QPushButton("Clear")
-        self.clear_button.setSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
-                                        QtWidgets.QSizePolicy.MinimumExpanding)
+        self.clear_button.setSizePolicy(
+            QtWidgets.QSizePolicy.MinimumExpanding,
+            QtWidgets.QSizePolicy.MinimumExpanding,
+        )
         self.toggle_button = QPushButton("Toggle Editor")
-        self.toggle_button.setSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
-                                         QtWidgets.QSizePolicy.MinimumExpanding)
+        self.toggle_button.setSizePolicy(
+            QtWidgets.QSizePolicy.MinimumExpanding,
+            QtWidgets.QSizePolicy.MinimumExpanding,
+        )
         button_layout.addWidget(self.make_unique_button)
         button_layout.addWidget(self.clear_button)
         button_layout.addWidget(self.toggle_button)
@@ -36,7 +42,9 @@ class PointerPropertyEditor (QGroupBox, PropertyWidget):
 
         self.make_unique_button.clicked.connect(self._on_make_unique_clicked)
         self.clear_button.clicked.connect(self._on_clear_clicked)
-        self.toggle_button.clicked.connect(lambda: self.form_widget.setVisible(not self.form_widget.isVisible()))
+        self.toggle_button.clicked.connect(
+            lambda: self.form_widget.setVisible(not self.form_widget.isVisible())
+        )
 
     def _on_make_unique_clicked(self):
         if self.target:

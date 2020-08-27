@@ -14,6 +14,8 @@ class PlainValueProperty(AbstractProperty, ABC):
 
     def import_values(self, values_json: Any):
         if values_json and self.value and not isinstance(values_json, type(self.value)):
-            raise TypeError("Type mismatch when importing values into property %s." % self.name)
+            raise TypeError(
+                "Type mismatch when importing values into property %s." % self.name
+            )
         else:
             self.value = values_json

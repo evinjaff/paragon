@@ -17,19 +17,22 @@ def _slice_talk_window(talk_window: QPixmap) -> List[QPixmap]:
     type_1_width, type_1_height = _TALK_WINDOW_TYPE_1_DIMENSIONS
     type_1_pixmap = talk_window.copy(0, type_0_height, type_1_width, type_1_height)
     type_2_width, type_2_height = _TALK_WINDOW_TYPE_2_DIMENSIONS
-    type_2_pixmap = talk_window.copy(0, type_0_height + type_1_height, type_2_width, type_2_height)
+    type_2_pixmap = talk_window.copy(
+        0, type_0_height + type_1_height, type_2_width, type_2_height
+    )
     return [type_0_pixmap, type_1_pixmap, type_2_pixmap]
 
 
 def _slice_name_plate(name_plate_texture: QPixmap) -> Dict[str, QPixmap]:
     name_plate_width, name_plate_height = _NAME_PLATE_DIMENSIONS
-    name_plate_pixmap = name_plate_texture.copy(0, 0, name_plate_width, name_plate_height)
+    name_plate_pixmap = name_plate_texture.copy(
+        0, 0, name_plate_width, name_plate_height
+    )
     arrow_width, arrow_height = _ARROW_DIMENSIONS
-    arrow_pixmap = name_plate_texture.copy(name_plate_width, 0, arrow_width, arrow_height)
-    return {
-        "plate": name_plate_pixmap,
-        "arrow": arrow_pixmap
-    }
+    arrow_pixmap = name_plate_texture.copy(
+        name_plate_width, 0, arrow_width, arrow_height
+    )
+    return {"plate": name_plate_pixmap, "arrow": arrow_pixmap}
 
 
 class FE14ConversationAssetsLoader:
@@ -50,8 +53,16 @@ class FE14ConversationAssetsLoader:
         bch_talk_window_w = assets_service.load_bch("/ui/TalkWindowW.bch.lz")
         bch_talk_window_b = assets_service.load_bch("/ui/TalkWindowB.bch.lz")
         return {
-            "standard": _slice_talk_window(QPixmap.fromImage(bch_talk_window_standard["TalkWindow"].image())),
-            "name_plate": _slice_name_plate(QPixmap.fromImage(bch_name_plate["TalkWindow2"].image())),
-            "birthright": _slice_talk_window(QPixmap.fromImage(bch_talk_window_w["TalkWindow"].image())),
-            "conquest": _slice_talk_window(QPixmap.fromImage(bch_talk_window_b["TalkWindow"].image()))
+            "standard": _slice_talk_window(
+                QPixmap.fromImage(bch_talk_window_standard["TalkWindow"].image())
+            ),
+            "name_plate": _slice_name_plate(
+                QPixmap.fromImage(bch_name_plate["TalkWindow2"].image())
+            ),
+            "birthright": _slice_talk_window(
+                QPixmap.fromImage(bch_talk_window_w["TalkWindow"].image())
+            ),
+            "conquest": _slice_talk_window(
+                QPixmap.fromImage(bch_talk_window_b["TalkWindow"].image())
+            ),
         }

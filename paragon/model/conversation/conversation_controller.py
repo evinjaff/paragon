@@ -21,8 +21,9 @@ class ConversationController:
         self._next_message = ""
         self._conversation_type = 1
         self._window_type: int = 0
-        self._name_archive: MessageArchive = \
-            locator.get_scoped("OpenFilesService").open_message_archive("m/GameData.bin.lz")
+        self._name_archive: MessageArchive = locator.get_scoped(
+            "OpenFilesService"
+        ).open_message_archive("m/GameData.bin.lz")
 
     def reset(self):
         self.view.clear()
@@ -91,7 +92,7 @@ class ConversationController:
                 self._next_message,
                 active_speaker.display_name,
                 active_speaker.position,
-                mode=self._window_type
+                mode=self._window_type,
             )
             self._next_message = ""
         else:

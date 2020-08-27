@@ -44,7 +44,9 @@ class CommonModuleService:
             try:
                 module.commit_changes()
             except:
-                logging.exception("An error occurred while saving common module %s" % module.name)
+                logging.exception(
+                    "An error occurred while saving common module %s" % module.name
+                )
                 success = False
         return success
 
@@ -70,9 +72,13 @@ class CommonModuleService:
         for module_name in values_json:
             split_module_name = module_name.split("@", 1)
             if len(split_module_name) != 2:
-                raise KeyError("Expected a key containing the common module name and the file path.")
+                raise KeyError(
+                    "Expected a key containing the common module name and the file path."
+                )
             common_module_name = split_module_name[0]
             file_path = split_module_name[1]
-            module_template = locator.get_scoped("ModuleService").get_common_module_template(common_module_name)
+            module_template = locator.get_scoped(
+                "ModuleService"
+            ).get_common_module_template(common_module_name)
             module = self.open_common_module(module_template, file_path)
             module.import_values_from_dict(values_json[module_name])

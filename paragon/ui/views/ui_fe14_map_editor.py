@@ -1,7 +1,17 @@
 from PySide2 import QtCore
 from PySide2.QtGui import QKeySequence
-from PySide2.QtWidgets import QMainWindow, QToolBar, QAction, QTreeView, QListView, QScrollArea, \
-    QSplitter, QStatusBar, QLabel, QMenu
+from PySide2.QtWidgets import (
+    QMainWindow,
+    QToolBar,
+    QAction,
+    QTreeView,
+    QListView,
+    QScrollArea,
+    QSplitter,
+    QStatusBar,
+    QLabel,
+    QMenu,
+)
 
 from paragon.ui.fe14.fe14_spawn_editor_pane import FE14SpawnEditorPane
 from paragon.ui.fe14.fe14_terrain_editor_pane import FE14TerrainEditorPane
@@ -29,16 +39,20 @@ class Ui_FE14MapEditor(QMainWindow):
         self.undo_action.setShortcut(QKeySequence("Ctrl+Z"))
         self.redo_action = QAction("Redo")
         self.redo_action.setShortcut(QKeySequence("Ctrl+Shift+Z"))
-        self.toolbar.addActions([self.toggle_coordinate_type_action, self.refresh_action])
+        self.toolbar.addActions(
+            [self.toggle_coordinate_type_action, self.refresh_action]
+        )
         self.toolbar.addSeparator()
-        self.toolbar.addActions([
-            self.copy_spawn_action,
-            self.paste_spawn_action,
-            self.add_spawn_action,
-            self.delete_spawn_action,
-            self.add_group_action,
-            self.delete_group_action
-        ])
+        self.toolbar.addActions(
+            [
+                self.copy_spawn_action,
+                self.paste_spawn_action,
+                self.add_spawn_action,
+                self.delete_spawn_action,
+                self.add_group_action,
+                self.delete_group_action,
+            ]
+        )
         self.toolbar.addSeparator()
         self.toolbar.addAction(self.add_tile_action)
         self.toolbar.addSeparator()
@@ -59,16 +73,20 @@ class Ui_FE14MapEditor(QMainWindow):
 
         self.model_view.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.model_view_context_menu = QMenu()
-        self.model_view_context_menu.addActions([self.toggle_coordinate_type_action, self.refresh_action])
+        self.model_view_context_menu.addActions(
+            [self.toggle_coordinate_type_action, self.refresh_action]
+        )
         self.model_view_context_menu.addSeparator()
-        self.model_view_context_menu.addActions([
-            self.copy_spawn_action,
-            self.paste_spawn_action,
-            self.add_spawn_action,
-            self.delete_spawn_action,
-            self.add_group_action,
-            self.delete_group_action
-        ])
+        self.model_view_context_menu.addActions(
+            [
+                self.copy_spawn_action,
+                self.paste_spawn_action,
+                self.add_spawn_action,
+                self.delete_spawn_action,
+                self.add_group_action,
+                self.delete_group_action,
+            ]
+        )
         self.model_view_context_menu.addSeparator()
         self.model_view_context_menu.addAction(self.add_tile_action)
         self.model_view_context_menu.addSeparator()

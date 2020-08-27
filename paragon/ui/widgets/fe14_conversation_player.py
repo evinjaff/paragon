@@ -33,18 +33,26 @@ class FE14ConversationPlayer(Ui_ConversationPlayer):
         self.replay_button.setEnabled(False)
 
     def _play_next(self):
-        while self.commands and self.position < len(self.commands) and not self.commands[self.position].is_pause():
+        while (
+            self.commands
+            and self.position < len(self.commands)
+            and not self.commands[self.position].is_pause()
+        ):
             try:
                 self.commands[self.position].run(self.conversation_controller)
             except Exception as e:
-                self.error_dialog = ErrorDialog("An error occured during interpreting - " + str(e))
+                self.error_dialog = ErrorDialog(
+                    "An error occured during interpreting - " + str(e)
+                )
                 self.error_dialog.show()
                 self.clear()
                 return
             self.position += 1
         self.conversation_controller.dump()
         self.position += 1
-        self.next_button.setEnabled(self.commands and self.position < len(self.commands))
+        self.next_button.setEnabled(
+            self.commands and self.position < len(self.commands)
+        )
 
     def _replay(self):
         self.conversation_controller.reset()

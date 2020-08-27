@@ -25,7 +25,9 @@ class ProjectSelectWindow(QMainWindow, Ui_project_select):
         self.table_view.setSelectionBehavior(QTableView.SelectRows)
         self.table_view.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
         self.table_view.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.remember_check_box.setChecked(settings_service.should_remember_last_project())
+        self.remember_check_box.setChecked(
+            settings_service.should_remember_last_project()
+        )
 
         self.action_create.triggered.connect(self._on_create_project_clicked)
         self.action_remove.triggered.connect(self._on_remove_clicked)
@@ -33,7 +35,9 @@ class ProjectSelectWindow(QMainWindow, Ui_project_select):
         self.action_move_down.triggered.connect(self._on_move_down_clicked)
         self.remember_check_box.stateChanged.connect(self._on_remember_project_checked)
         self.table_view.activated.connect(self._on_project_activated)
-        self.table_view.selectionModel().currentRowChanged.connect(self._on_selected_row_changed)
+        self.table_view.selectionModel().currentRowChanged.connect(
+            self._on_selected_row_changed
+        )
 
     def closeEvent(self, event: QtGui.QCloseEvent):
         locator.get_static("SettingsService").save_settings()

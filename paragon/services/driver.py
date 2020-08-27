@@ -16,7 +16,9 @@ from paragon.services.service_locator import locator
 class Driver:
     def __init__(self, project: Project):
         logging.info("Initializing driver.")
-        if not os.path.exists(project.patch_path) or not os.path.exists(project.rom_path):
+        if not os.path.exists(project.patch_path) or not os.path.exists(
+            project.rom_path
+        ):
             logging.error("Project path or ROM path are no longer valid.")
             raise FileNotFoundError
         self._project = project
@@ -31,7 +33,9 @@ class Driver:
 
     def _register_game_services(self):
         if self._project.game == Game.FE14.value:
-            locator.register_scoped("AssetsService", FE14AssetsService(self._project.filesystem))
+            locator.register_scoped(
+                "AssetsService", FE14AssetsService(self._project.filesystem)
+            )
             locator.register_scoped("PortraitService", FE14PortraitService())
             locator.register_scoped("IconService", FE14IconService())
             locator.register_scoped("SpriteService", FE14SpriteService())
@@ -44,7 +48,7 @@ class Driver:
             locator.get_scoped("DedicatedEditorsService"),
             locator.get_scoped("ModuleService"),
             locator.get_scoped("CommonModuleService"),
-            locator.get_scoped("OpenFilesService")
+            locator.get_scoped("OpenFilesService"),
         ]
 
         success = True
@@ -58,11 +62,17 @@ class Driver:
         with open(file_name, "r", encoding="utf-8") as f:
             values_json = json.load(f)
         if "Modules" in values_json:
-            locator.get_scoped("ModuleService").import_values_from_json(values_json["Modules"])
+            locator.get_scoped("ModuleService").import_values_from_json(
+                values_json["Modules"]
+            )
         if "Common Modules" in values_json:
-            locator.get_scoped("CommonModuleService").import_values_from_json(values_json["Common Modules"])
+            locator.get_scoped("CommonModuleService").import_values_from_json(
+                values_json["Common Modules"]
+            )
         if "Services" in values_json:
-            locator.get_scoped("DedicatedEditorsService").import_values_from_json(values_json["Services"])
+            locator.get_scoped("DedicatedEditorsService").import_values_from_json(
+                values_json["Services"]
+            )
         self._resolve_import_references()
         logging.debug("Importing of file %s completed successfully." % file_name)
 

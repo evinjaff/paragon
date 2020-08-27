@@ -62,7 +62,9 @@ class LoadPortraitsCommand(Command):
 
     def to_paragon_script(self) -> str:
         conversation_service = locator.get_scoped("ConversationService")
-        return "NewSpeaker " + conversation_service.translate_speaker_name_to_english(self.portrait_name)
+        return "NewSpeaker " + conversation_service.translate_speaker_name_to_english(
+            self.portrait_name
+        )
 
 
 class RepositionSpeakerCommand(Command):
@@ -91,7 +93,9 @@ class SetSpeakerCommand(Command):
 
     def to_paragon_script(self) -> str:
         conversation_service = locator.get_scoped("ConversationService")
-        return "SetSpeaker " + conversation_service.translate_speaker_name_to_english(self.new_speaker)
+        return "SetSpeaker " + conversation_service.translate_speaker_name_to_english(
+            self.new_speaker
+        )
 
 
 class SetEmotionCommand(Command):
@@ -546,7 +550,12 @@ class ColorCommand(Command):
         return "$c" + ",".join(self.color) + "|"
 
     def to_paragon_script(self) -> str:
-        return "Color(%s, %s, %s, %s)" % (self.color[0], self.color[1], self.color[2], self.color[3])
+        return "Color(%s, %s, %s, %s)" % (
+            self.color[0],
+            self.color[1],
+            self.color[2],
+            self.color[3],
+        )
 
 
 class VisualEffectCommand(Command):
