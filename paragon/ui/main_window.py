@@ -144,7 +144,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.proxy_model.setSourceModel(None)
         self.hide()
         state_machine = locator.get_static("StateMachine")
-        state_machine.transition("Loading")
+        state_machine.transition("Loading", project=locator.get_scoped("Driver").get_project())
 
     @staticmethod
     def quit_application():

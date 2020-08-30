@@ -1,6 +1,6 @@
 import logging
 
-from paragon.core.state_machine import State
+from paragon.states.state_machine import State
 from paragon.services.service_locator import locator
 from paragon.ui.project_select import ProjectSelectWindow
 

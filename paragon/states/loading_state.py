@@ -6,7 +6,7 @@ from PySide2 import QtCore
 from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QProgressDialog
 
-from paragon.core.state_machine import State
+from paragon.states.state_machine import State
 from paragon.model.project import Project
 from paragon.services.common_module_service import CommonModuleService
 from paragon.services.dedicated_editors_service import DedicatedEditorsService
@@ -50,14 +50,14 @@ class LoadingWorker(QtCore.QThread):
 class LoadingState(State):
     def __init__(self):
         super().__init__("Loading")
-        self.project = None
         self.loading_thread: Optional[LoadingWorker] = None
         self.progress_dialog = None
         self.error_dialog = ErrorDialog("Loading failed. See the log file for details.")
         self.error_dialog.finished.connect(self._on_error_dialog_closed)
 
-    def act(self):
-        if not self.project:
+    def act(self, **kwargs):
+        project = kwargs["project"]
+        if not project:
             logging.fatal("Entered loading without locating a project.")
             sys.exit(1)
 
@@ -68,7 +68,7 @@ class LoadingState(State):
         self.progress_dialog.setAutoClose(False)
         self.progress_dialog.hide()
         self.progress_dialog.show()
-        self.loading_thread = LoadingWorker(self.project)
+        self.loading_thread = LoadingWorker(project)
         self.loading_thread.over.connect(self._on_loading_success)
         self.loading_thread.failed.connect(self._on_loading_failure)
         self.loading_thread.start()

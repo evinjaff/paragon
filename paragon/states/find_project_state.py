@@ -1,6 +1,6 @@
 import logging
 
-from paragon.core.state_machine import State
+from paragon.states.state_machine import State
 from paragon.services.service_locator import locator
 
 
@@ -12,6 +12,6 @@ class FindProjectState(State):
         logging.info("Entered FindProject state.")
         settings_service = locator.get_static("SettingsService")
         if settings_service.has_cached_project():
-            locator.get_static("StateMachine").transition("Loading")
+            locator.get_static("StateMachine").transition("Loading", project=settings_service.get_cached_project())
         else:
             locator.get_static("StateMachine").transition("SelectProject")

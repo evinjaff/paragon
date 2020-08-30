@@ -81,7 +81,7 @@ class ProjectSelectWindow(QMainWindow, Ui_project_select):
         item = self.model.itemFromIndex(true_index)
         self.current_project = item.data()
         self.hide()
-        locator.get_static("StateMachine").transition("Loading")
+        locator.get_static("StateMachine").transition("Loading", project=self.current_project)
 
     def _on_selected_row_changed(self, index: QModelIndex):
         self.action_remove.setEnabled(index.isValid())
