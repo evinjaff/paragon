@@ -65,7 +65,7 @@ class ToggleStatsEditor(QGroupBox, PropertyWidget):
     def _get_labels_for_project():
         driver = service_locator.locator.get_scoped("Driver")
         project = driver.get_project()
-        if project.game == Game.FE15.value:
+        if project.game == Game.FE15:
             return EDITOR_LABELS_SOV
         else:
             return EDITOR_LABELS

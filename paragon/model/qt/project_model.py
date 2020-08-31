@@ -11,7 +11,7 @@ class ProjectModel(QStandardItemModel):
         super().__init__(parent)
         self.projects = projects
         self._populate_model()
-        self.setHorizontalHeaderLabels(["Project Path", "Game", "Language"])
+        self.setHorizontalHeaderLabels(["Name", "Output Path", "Game", "Language"])
 
     def _populate_model(self):
         for project in self.projects:
@@ -51,9 +51,9 @@ class ProjectModel(QStandardItemModel):
 
     @staticmethod
     def _create_row_from_project(project: Project) -> List[QStandardItem]:
-        item = QStandardItem(project.patch_path)
-        item.setText(project.patch_path)
+        item = QStandardItem(project.name)
         item.setData(project)
-        game_item = QStandardItem(project.get_game_name())
-        language_item = QStandardItem(project.get_language_name())
-        return [item, game_item, language_item]
+        project_path_item = QStandardItem(project.output_path)
+        game_item = QStandardItem(project.game.name)
+        language_item = QStandardItem(project.language.name)
+        return [item, project_path_item, game_item, language_item]

@@ -31,7 +31,7 @@ class LoadingWorker(QtCore.QThread):
         try:
             locator.register_scoped("Driver", Driver(self.project))
             locator.register_scoped(
-                "OpenFilesService", OpenFilesService(self.project.filesystem)
+                "OpenFilesService", OpenFilesService(self.project.get_filesystem())
             )
             locator.register_scoped("ModuleDataService", ModuleDataService())
             locator.register_scoped("ModuleService", ModuleService(self.project))

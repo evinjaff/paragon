@@ -12,6 +12,8 @@ class FindProjectState(State):
         logging.info("Entered FindProject state.")
         settings_service = locator.get_static("SettingsService")
         if settings_service.has_cached_project():
-            locator.get_static("StateMachine").transition("Loading", project=settings_service.get_cached_project())
+            locator.get_static("StateMachine").transition(
+                "Loading", project=settings_service.get_cached_project()
+            )
         else:
             locator.get_static("StateMachine").transition("SelectProject")

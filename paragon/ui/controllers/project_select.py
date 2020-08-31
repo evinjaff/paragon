@@ -3,10 +3,11 @@ from PySide2.QtCore import QModelIndex
 from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QMainWindow, QTableView, QHeaderView, QAbstractItemView
 
+from paragon.model.project import Project
 from paragon.model.qt.project_model import ProjectModel
 from paragon.services.service_locator import locator
 from paragon.ui.autogen.ui_project_select import Ui_project_select
-from paragon.ui.create_project_dialog import CreateProjectDialog
+from paragon.ui.controllers.project_editor import ProjectEditor
 
 
 class ProjectSelectWindow(QMainWindow, Ui_project_select):
@@ -15,15 +16,15 @@ class ProjectSelectWindow(QMainWindow, Ui_project_select):
         self.setupUi(self)
         self.setWindowTitle("Project Select")
         self.setWindowIcon(QIcon("paragon.ico"))
+
         self.create_project_dialog = None
-        self.current_project = None
 
         settings_service = locator.get_static("SettingsService")
         self.model: ProjectModel = settings_service.get_project_model()
         self.table_view.setModel(self.model)
         self.table_view.verticalHeader().hide()
         self.table_view.setSelectionBehavior(QTableView.SelectRows)
-        self.table_view.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.table_view.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
         self.table_view.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.remember_check_box.setChecked(
             settings_service.should_remember_last_project()
@@ -48,16 +49,15 @@ class ProjectSelectWindow(QMainWindow, Ui_project_select):
     def _on_create_project_clicked(self):
         if self.create_project_dialog:
             self.create_project_dialog.hide()
-        self.create_project_dialog = CreateProjectDialog()
-        self.create_project_dialog.accepted.connect(self._on_create_project_accepted)
+        self.create_project_dialog = ProjectEditor()
+        self.create_project_dialog.project_saved.connect(self._on_project_created)
         self.create_project_dialog.show()
 
-    def _on_create_project_accepted(self):
+    def _on_project_created(self, project: Project):
         if self.create_project_dialog:
-            self.current_project = self.create_project_dialog.project
-            self.model.add_project(self.current_project)
+            self.model.add_project(project)
             self.hide()
-            locator.get_static("StateMachine").transition("Loading")
+            locator.get_static("StateMachine").transition("Loading", project=project)
 
     def _on_remove_clicked(self):
         index = self.table_view.currentIndex()
@@ -79,9 +79,8 @@ class ProjectSelectWindow(QMainWindow, Ui_project_select):
     def _on_project_activated(self, index: QModelIndex):
         true_index = self.model.index(index.row(), 0)
         item = self.model.itemFromIndex(true_index)
-        self.current_project = item.data()
         self.hide()
-        locator.get_static("StateMachine").transition("Loading", project=self.current_project)
+        locator.get_static("StateMachine").transition("Loading", project=item.data())
 
     def _on_selected_row_changed(self, index: QModelIndex):
         self.action_remove.setEnabled(index.isValid())

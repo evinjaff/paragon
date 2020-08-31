@@ -8,13 +8,13 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2 import QtCore, QtWidgets
 
 
 class Ui_project_select(object):
     def setupUi(self, project_select):
         project_select.setObjectName("project_select")
-        project_select.resize(591, 358)
+        project_select.resize(650, 375)
         self.centralwidget = QtWidgets.QWidget(project_select)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)

@@ -16,7 +16,7 @@ from paragon.services.service_locator import locator
 class Driver:
     def __init__(self, project: Project):
         logging.info("Initializing driver.")
-        if not os.path.exists(project.patch_path) or not os.path.exists(
+        if not os.path.exists(project.output_path) or not os.path.exists(
             project.rom_path
         ):
             logging.error("Project path or ROM path are no longer valid.")
@@ -32,9 +32,9 @@ class Driver:
         self._unresolved_references = []
 
     def _register_game_services(self):
-        if self._project.game == Game.FE14.value:
+        if self._project.game == Game.FE14:
             locator.register_scoped(
-                "AssetsService", FE14AssetsService(self._project.filesystem)
+                "AssetsService", FE14AssetsService(self._project.get_filesystem())
             )
             locator.register_scoped("PortraitService", FE14PortraitService())
             locator.register_scoped("IconService", FE14IconService())

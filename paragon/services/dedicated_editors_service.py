@@ -35,9 +35,9 @@ class DedicatedEditorsService:
 
     @staticmethod
     def _create_services_model_for_game(game: Game):
-        if game == Game.FE13.value:
+        if game == Game.FE13:
             base = {}
-        elif game == Game.FE14.value:
+        elif game == Game.FE14:
             base = FE14_SERVICES
         else:
             base = {}

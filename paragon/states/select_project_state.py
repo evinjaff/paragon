@@ -2,7 +2,7 @@ import logging
 
 from paragon.states.state_machine import State
 from paragon.services.service_locator import locator
-from paragon.ui.project_select import ProjectSelectWindow
+from paragon.ui.controllers.project_select import ProjectSelectWindow
 
 
 class SelectProjectState(State):
